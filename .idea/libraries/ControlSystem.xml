@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ControlSystem">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/ControlSystem.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
