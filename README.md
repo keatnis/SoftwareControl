@@ -20,6 +20,8 @@ Contraseña: admin
 
 # Modulo operador
 ![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/a2f3692a-3355-427e-a0c5-be2f61e6f5aa)
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/2d42c126-52bb-4f30-978b-bdcfb9bef839)
+
 
 
 # Modulo User
