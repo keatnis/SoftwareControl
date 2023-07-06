@@ -37,10 +37,11 @@ public class Dashboard extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0, 11, 0));
 
-        card1.setBackground(new java.awt.Color(0, 102, 102));
+        card1.setBackground(new java.awt.Color(102, 204, 255));
         jPanel1.add(card1);
 
-        card2.setBackground(new java.awt.Color(255, 255, 204));
+        card2.setBackground(new java.awt.Color(153, 255, 153));
+        card2.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(card2);
 
         card3.setBackground(new java.awt.Color(153, 153, 255));

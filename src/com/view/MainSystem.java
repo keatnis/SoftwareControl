@@ -125,14 +125,12 @@ public class MainSystem extends javax.swing.JFrame {
         panelEnc.setOpaque(false);
         panelEnc.setPreferredSize(new java.awt.Dimension(1374, 74));
 
-        lbUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbUser.setForeground(new java.awt.Color(255, 255, 255));
+        lbUser.setFont(new java.awt.Font("JetBrains Mono NL Light", 1, 18)); // NOI18N
         lbUser.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbUser.setText("User Name");
         lbUser.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         lbTitle.setFont(new java.awt.Font("Poppins SemiBold", 1, 20)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(255, 255, 255));
         lbTitle.setText("Titulo del Módulo");
 
         javax.swing.GroupLayout panelEncLayout = new javax.swing.GroupLayout(panelEnc);
@@ -144,21 +142,20 @@ public class MainSystem extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
                 .addComponent(lbTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+                .addGap(329, 329, 329)
                 .addComponent(lbUser, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                .addGap(117, 117, 117))
+                .addGap(19, 19, 19))
         );
         panelEncLayout.setVerticalGroup(
             panelEncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEncLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbTitle)
+                .addGroup(panelEncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTitle)
+                    .addComponent(lbUser))
                 .addGap(13, 13, 13)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(panelEncLayout.createSequentialGroup()
-                .addComponent(lbUser)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         MenuBar.setBackground(new java.awt.Color(31, 44, 81));
@@ -171,6 +168,11 @@ public class MainSystem extends javax.swing.JFrame {
         Dasboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DasboardMouseClicked(evt);
+            }
+        });
+        Dasboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DasboardActionPerformed(evt);
             }
         });
         MenuBar.add(Dasboard);
@@ -252,7 +254,7 @@ public class MainSystem extends javax.swing.JFrame {
     private void DasboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DasboardMouseClicked
         // TODO add your handling code here:
         this.showForm(new Dashboard(), "Dasboard");
-        this.repaint();
+       
     }//GEN-LAST:event_DasboardMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -293,6 +295,10 @@ public class MainSystem extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
        this.showForm(new UserView(), "Usuarios");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void DasboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DasboardActionPerformed
+           this.showForm(new Dashboard(), "Dasboard");
+    }//GEN-LAST:event_DasboardActionPerformed
 
 //    public static void main(ModelUsers user) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {
