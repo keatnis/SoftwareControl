@@ -23,5 +23,6 @@ Contraseña: admin
 
 # Modulo User
 * la contaseña es encriptada al insertarse en la base de datos
-![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/c452e5b0-55bc-4471-a068-5e610cf80cc3)
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/cee86d67-ce6f-4b03-a526-d8401f8dc442)
+
 
