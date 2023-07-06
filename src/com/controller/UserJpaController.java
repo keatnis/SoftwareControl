@@ -164,4 +164,12 @@ public class UserJpaController implements Serializable {
         return ((count.equals(0L)) ? false : true);
 
     }
+    
+       public List<User> findByUsername(String user){
+        EntityManager em = getEntityManager();
+        List<User> userList= em.createNamedQuery("User.findByNickname")
+                    .setParameter("nickname", user).getResultList();    
+       
+        return userList;
+    }
 }

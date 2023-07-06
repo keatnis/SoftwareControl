@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
@@ -12,8 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,7 +22,11 @@ public class OperadorJpaController implements Serializable {
     public OperadorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("ControlSystemPU");
+
+    public OperadorJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ControlSystemPU");
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -37,6 +39,7 @@ public class OperadorJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(operador);
             em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Trabajador registrado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } finally {
             if (em != null) {
                 em.close();
@@ -51,6 +54,7 @@ public class OperadorJpaController implements Serializable {
             em.getTransaction().begin();
             operador = em.merge(operador);
             em.getTransaction().commit();
+              JOptionPane.showMessageDialog(null, "Datos actualizados corectamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
@@ -73,6 +77,7 @@ public class OperadorJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Operador operador;
+              JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             try {
                 operador = em.getReference(Operador.class, id);
                 operador.getId();
@@ -133,5 +138,18 @@ public class OperadorJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public boolean existOperador(Integer id) {
+       String query = "select count(operador_id) from OPERADOR  where operador_id=" + id;
+        final EntityManager em = getEntityManager();
+        // you will always get a single result
+        Long count = (Long) em.createNativeQuery(query).getSingleResult();
+        return ((count.equals(0L)) ? false : true);
+    }
+    public List<Operador> getAllOperador() {
+        EntityManager em = getEntityManager();
+        List<Operador> operadors = em.createNativeQuery("Operador.findAllConcat",Operador.class).getResultList();
+        return operadors;
+    }
+
 }

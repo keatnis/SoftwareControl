@@ -26,6 +26,7 @@ public class UserDao {
     metodos para el crud
      */
     public void addUser(User usr) {
+        
         userController.create(usr);
 
     }
@@ -43,7 +44,10 @@ public class UserDao {
         }
 
     }
-
+    public List<User> loginByUser(String user){
+      return userController.findByUsername(user);
+                
+    }
     public void delete(Integer id) {
         try {
             if (userController.userExists(id)) {

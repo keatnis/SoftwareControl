@@ -28,7 +28,7 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name = "User.findByNombre", query = "SELECT u FROM User u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "User.findByApePaterno", query = "SELECT u FROM User u WHERE u.apePaterno = :apePaterno"),
     @NamedQuery(name = "User.findByApeMaterno", query = "SELECT u FROM User u WHERE u.apeMaterno = :apeMaterno"),
-    @NamedQuery(name = "User.findByNickname", query = "SELECT u FROM User u WHERE u.nickname = :nickname"),
+    @NamedQuery(name = "User.findByNickname", query = "SELECT u FROM User u WHERE u.nickname = :nickname "),
     @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role")})
 
 public class User implements Serializable{

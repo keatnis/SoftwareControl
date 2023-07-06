@@ -1,18 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.model;
 
+import com.mysql.cj.jdbc.Blob;
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.MapsId;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -31,16 +36,20 @@ import javax.persistence.Table;
     @NamedQuery(name = "Operador.findByNum", query = "SELECT o FROM Operador o WHERE o.num = :num"),
     @NamedQuery(name = "Operador.findByColonia", query = "SELECT o FROM Operador o WHERE o.colonia = :colonia"),
     @NamedQuery(name = "Operador.findByCiudad", query = "SELECT o FROM Operador o WHERE o.ciudad = :ciudad"),
-    @NamedQuery(name = "Operador.findByTelefono", query = "SELECT o FROM Operador o WHERE o.telefono = :telefono"),
-    @NamedQuery(name = "Operador.findByCelular", query = "SELECT o FROM Operador o WHERE o.celular = :celular"),
-    @NamedQuery(name = "Operador.findByContactoId", query = "SELECT o FROM Operador o WHERE o.contactoId = :contactoId")})
+    @NamedQuery(name = "Operador.findByTelefono", query = "SELECT o FROM Operador o WHERE o.telefono = :telefono"),})
+@NamedNativeQuery(name = "Operador.exitsById", query = "select count(operador_id) from OPERADOR  where operador_id= :operador_id;")
+@NamedNativeQuery(name = "Operador.findAllConcat", query = "select o.operador_id, concat(o.nombre,' ',o.ape_paterno,' ',o.ape_materno)AS nombre,o.puesto,o.telefono,\n"
+        + "o.telefono2, concat(o.calle,' ',o.colonia,' ',o.num,' ',o.ciudad,' ',' ',o.estado)as direccion, o.typeblood,o.`file`\n"
+        + ", concat(c.nombre,' ',c.ape_paterno,' ',c.ape_materno,' ',c.parentesco,' ',c.telefono) as contacto \n"
+        + "FROM OPERADOR as o\n"
+        + "inner join CONTACTO_EMERGENCIA as c ON o.operador_id = c.id;")
 public class Operador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "operador_id")
     private Integer id;
     @Basic(optional = false)
     @Column(name = "nombre")
@@ -55,37 +64,128 @@ public class Operador implements Serializable {
     @Column(name = "calle")
     private String calle;
     @Column(name = "num")
-    private Integer num;
+    private String num;
     @Basic(optional = false)
     @Column(name = "colonia")
     private String colonia;
     @Basic(optional = false)
     @Column(name = "ciudad")
     private String ciudad;
-    @Column(name = "telefono")
-    private Integer telefono;
-    @Column(name = "celular")
-    private Integer celular;
     @Basic(optional = false)
-    @Column(name = "contacto_id")
-    private int contactoId;
+    @Column(name = "estado")
+    private String estado;
+    @Column(name = "telefono")
+    private String telefono;
+    @Column(name = "telefono2")
+    private String telefono2;
+    @Basic(optional = false)
+    @Column(name = "alergias")
+    private String alergias;
+    @Basic(optional = false)
+    @Column(name = "typeblood")
+    private String typeblood;
+    @Basic(optional = false)
+    @Column(name = "puesto")
+    private String puesto;
+
+    @Column(name = "file")
+    private byte[] file;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "OPERADOR_EMERGENCIA",
+            joinColumns = @JoinColumn(name = "operador_id", referencedColumnName = "operador_id")
+    )
+
+    private ContactoEmergencia contactoEmergencia;
 
     public Operador() {
     }
 
-    public Operador(Integer id) {
-        this.id = id;
-    }
-
-    public Operador(Integer id, String nombre, String apePaterno, String apeMaterno, String calle, String colonia, String ciudad, int contactoId) {
+    public Operador(Integer id, String nombre, String apePaterno, String apeMaterno, String calle, String num, String colonia, String ciudad, String estado, String telefono, String telefono2, String alergias, String typeblood, String puesto, byte[] file, ContactoEmergencia contactoEmergencia) {
         this.id = id;
         this.nombre = nombre;
         this.apePaterno = apePaterno;
         this.apeMaterno = apeMaterno;
         this.calle = calle;
+        this.num = num;
         this.colonia = colonia;
         this.ciudad = ciudad;
-        this.contactoId = contactoId;
+        this.estado = estado;
+        this.telefono = telefono;
+        this.telefono2 = telefono2;
+        this.alergias = alergias;
+        this.typeblood = typeblood;
+        this.puesto = puesto;
+        this.file = file;
+        this.contactoEmergencia = contactoEmergencia;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getTelefono2() {
+        return telefono2;
+    }
+
+    public void setTelefono2(String telefono2) {
+        this.telefono2 = telefono2;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getAlergias() {
+        return alergias;
+    }
+
+    public void setAlergias(String alergias) {
+        this.alergias = alergias;
+    }
+
+    public String getTypeblood() {
+        return typeblood;
+    }
+
+    public void setTypeblood(String typeblood) {
+        this.typeblood = typeblood;
+    }
+
+    public String getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+
+    public ContactoEmergencia getContactoEmergencia() {
+        return contactoEmergencia;
+    }
+
+    public void setContactoEmergencia(ContactoEmergencia contactoEmergencia) {
+        this.contactoEmergencia = contactoEmergencia;
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public Operador(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -128,11 +228,11 @@ public class Operador implements Serializable {
         this.calle = calle;
     }
 
-    public Integer getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(Integer num) {
+    public void setNum(String num) {
         this.num = num;
     }
 
@@ -152,30 +252,6 @@ public class Operador implements Serializable {
         this.ciudad = ciudad;
     }
 
-    public Integer getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(Integer telefono) {
-        this.telefono = telefono;
-    }
-
-    public Integer getCelular() {
-        return celular;
-    }
-
-    public void setCelular(Integer celular) {
-        this.celular = celular;
-    }
-
-    public int getContactoId() {
-        return contactoId;
-    }
-
-    public void setContactoId(int contactoId) {
-        this.contactoId = contactoId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,22 +259,4 @@ public class Operador implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Operador)) {
-            return false;
-        }
-        Operador other = (Operador) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.model.Operador[ id=" + id + " ]";
-    }
-    
 }

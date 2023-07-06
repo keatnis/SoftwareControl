@@ -1,19 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.eclipse.persistence.annotations.PrimaryKey;
 
 /**
  *
@@ -23,13 +25,10 @@ import javax.persistence.Table;
 @Table(name = "CONTACTO_EMERGENCIA")
 @NamedQueries({
     @NamedQuery(name = "ContactoEmergencia.findAll", query = "SELECT c FROM ContactoEmergencia c"),
-    @NamedQuery(name = "ContactoEmergencia.findById", query = "SELECT c FROM ContactoEmergencia c WHERE c.id = :id"),
-    @NamedQuery(name = "ContactoEmergencia.findByNombre", query = "SELECT c FROM ContactoEmergencia c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "ContactoEmergencia.findByApePaterno", query = "SELECT c FROM ContactoEmergencia c WHERE c.apePaterno = :apePaterno"),
-    @NamedQuery(name = "ContactoEmergencia.findByApeMaterno", query = "SELECT c FROM ContactoEmergencia c WHERE c.apeMaterno = :apeMaterno"),
-    @NamedQuery(name = "ContactoEmergencia.findByTelefono", query = "SELECT c FROM ContactoEmergencia c WHERE c.telefono = :telefono"),
-    @NamedQuery(name = "ContactoEmergencia.findByParentesco", query = "SELECT c FROM ContactoEmergencia c WHERE c.parentesco = :parentesco")})
-public class ContactoEmergencia implements Serializable {
+    @NamedQuery(name = "ContactoEmergencia.findById", query = "SELECT c FROM ContactoEmergencia c WHERE c.id = :id")
+  })
+
+public class ContactoEmergencia{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,15 +43,12 @@ public class ContactoEmergencia implements Serializable {
     @Column(name = "ape_materno")
     private String apeMaterno;
     @Column(name = "telefono")
-    private Integer telefono;
+    private String telefono;
     @Column(name = "parentesco")
     private String parentesco;
+    
 
     public ContactoEmergencia() {
-    }
-
-    public ContactoEmergencia(Integer id) {
-        this.id = id;
     }
 
     public Integer getId() {
@@ -87,11 +83,11 @@ public class ContactoEmergencia implements Serializable {
         this.apeMaterno = apeMaterno;
     }
 
-    public Integer getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Integer telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -127,5 +123,5 @@ public class ContactoEmergencia implements Serializable {
     public String toString() {
         return "com.model.ContactoEmergencia[ id=" + id + " ]";
     }
-    
+
 }
