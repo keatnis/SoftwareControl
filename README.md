@@ -13,16 +13,18 @@ Software para el control de pago de operadores y control de mantenimiento, rendi
 # Login
 Usuario: admin
 Contraseña: admin
-#Menu principal * falta los demas modulos
-![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/96ffa13a-d937-4d8c-a8c3-6b0ead1c9835)
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/a08026e6-6ce9-4086-9ada-e657a36e8cdb)
 
-![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/c2572cda-01dc-4394-9a48-f8e0a7f1c598)
+#Menu principal * falta los demas modulos, pero ya etan las clases dao y model 
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/fd322230-1da8-4a1e-b7dc-b2c7ea852617)
+
 # Modulo operador
 ![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/a2f3692a-3355-427e-a0c5-be2f61e6f5aa)
 
 
 # Modulo User
 * la contaseña es encriptada al insertarse en la base de datos
-![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/cee86d67-ce6f-4b03-a526-d8401f8dc442)
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/507dd50e-963e-4932-9a60-c0549b2a3ba9)
+
 
 
