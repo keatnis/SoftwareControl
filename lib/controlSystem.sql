@@ -257,15 +257,18 @@ CREATE TABLE `SERVICIO` (
   `cantidad` float DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
   `empresa` varchar(255) DEFAULT NULL,
-  `fecha` datetime DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   `importe` float DEFAULT NULL,
+  `kilometraje` varchar(255) DEFAULT NULL,
   `metodo_pago` varchar(255) DEFAULT NULL,
   `observaciones` longtext,
   `precio` float DEFAULT NULL,
   `proximo_servicio` date DEFAULT NULL,
   `vehiculo_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  KEY `FK_SERVICIO_vehiculo_id` (`vehiculo_id`),
+  CONSTRAINT `FK_SERVICIO_vehiculo_id` FOREIGN KEY (`vehiculo_id`) REFERENCES `VEHICULO` (`vehiculo_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,6 +277,7 @@ CREATE TABLE `SERVICIO` (
 
 LOCK TABLES `SERVICIO` WRITE;
 /*!40000 ALTER TABLE `SERVICIO` DISABLE KEYS */;
+INSERT INTO `SERVICIO` VALUES (5,1,'sad','asd','2023-07-21',12121,'288880.0','TRANSFERENCIA/DEPOSITO','asd',12121,NULL,5);
 /*!40000 ALTER TABLE `SERVICIO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,15 +319,19 @@ DROP TABLE IF EXISTS `VEHICULO`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `VEHICULO` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `vehiculo_id` int NOT NULL AUTO_INCREMENT,
   `descripcion` longtext,
   `km_actual` float DEFAULT NULL,
   `marca` varchar(255) DEFAULT NULL,
   `modelo` varchar(255) DEFAULT NULL,
   `num_serie` varchar(255) DEFAULT NULL,
   `tipo_combustible` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `capacidad` float DEFAULT NULL,
+  `fin_renta` varchar(15) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`vehiculo_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,6 +340,7 @@ CREATE TABLE `VEHICULO` (
 
 LOCK TABLES `VEHICULO` WRITE;
 /*!40000 ALTER TABLE `VEHICULO` DISABLE KEYS */;
+INSERT INTO `VEHICULO` VALUES (4,'por ti',18000,'asd','asd','asd','Premium',4545,'2014-07-31','Contratado','Excabadora'),(5,'\nNADA POR QUE NO SE QUE PONER',222,'CAT','CAT-100MN','SD565654411','Diesel',150.51,'2023-07-25','Contratado','Camion de'),(6,'COLOR VERDE Y NARANJA',15000,'CAT','2023','20014FA2FFF','Diesel',15000,'2023-07-18','Contratado','Excabadora'),(7,'',125000,'cat','2018-mkoda','4554dsdf','Diesel',323,NULL,'Contratado','Excabadora');
 /*!40000 ALTER TABLE `VEHICULO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,4 +378,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-06 12:39:24
+-- Dump completed on 2023-07-10 10:03:52
