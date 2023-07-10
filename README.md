@@ -47,5 +47,8 @@ Al buscar el servicio registrado por medio de la marca, modulo o nu de serie del
 ![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/6b682206-bdb3-4dbf-8b93-00d89eca31e5)
 
 ![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/a24701d1-c8e3-4c15-947b-33aed2a253f4)
+Archivo Excel
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/0351b009-609f-4a5e-8d30-ac39403245b9)
+
 
 
