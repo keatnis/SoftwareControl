@@ -2,12 +2,10 @@ package com.view;
 
 import com.dao.UserDao;
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.model.User;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -121,13 +119,30 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        info.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/utils/icon/icon.jpg"))); // NOI18N
-        info.add(lbIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 6, 198, 185));
 
-        jLabel3.setText("Software");
-        info.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 203, -1, -1));
+        jLabel3.setFont(new java.awt.Font("JetBrains Mono NL ExtraBold", 0, 14)); // NOI18N
+        jLabel3.setText("Agustina Vázquez Ortiz");
+
+        javax.swing.GroupLayout infoLayout = new javax.swing.GroupLayout(info);
+        info.setLayout(infoLayout);
+        infoLayout.setHorizontalGroup(
+            infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(infoLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel3))
+        );
+        infoLayout.setVerticalGroup(
+            infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel3))
+        );
 
         login.setLayout(new java.awt.CardLayout(22, 11));
 
@@ -184,7 +199,7 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(20, 20, 20)
                                         .addComponent(lightDarkMode1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.model;
 
 import java.io.Serializable;
@@ -12,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -35,8 +33,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Servicio.findByImporte", query = "SELECT s FROM Servicio s WHERE s.importe = :importe"),
     @NamedQuery(name = "Servicio.findByMetodoPago", query = "SELECT s FROM Servicio s WHERE s.metodoPago = :metodoPago"),
     @NamedQuery(name = "Servicio.findByEmpresa", query = "SELECT s FROM Servicio s WHERE s.empresa = :empresa"),
-    @NamedQuery(name = "Servicio.findByProximoServicio", query = "SELECT s FROM Servicio s WHERE s.proximoServicio = :proximoServicio"),
-    @NamedQuery(name = "Servicio.findByVehiculoId", query = "SELECT s FROM Servicio s WHERE s.vehiculoId = :vehiculoId")})
+    @NamedQuery(name = "Servicio.findByProximoServicio", query = "SELECT s FROM Servicio s WHERE s.proximoServicio = :proximoServicio"),})
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +44,7 @@ public class Servicio implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "fecha")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
     @Column(name = "cantidad")
@@ -73,9 +70,11 @@ public class Servicio implements Serializable {
     @Column(name = "proximo_servicio")
     @Temporal(TemporalType.DATE)
     private Date proximoServicio;
-    @Basic(optional = false)
-    @Column(name = "vehiculo_id")
-    private int vehiculoId;
+    @ManyToOne()
+    @JoinColumn(name = "vehiculo_id")
+    private Vehiculo vehiculo;
+    @Column(name = "kilometraje")
+    private Float km;
 
     public Servicio() {
     }
@@ -84,7 +83,15 @@ public class Servicio implements Serializable {
         this.id = id;
     }
 
-    public Servicio(Integer id, Date fecha, float cantidad, String descripcion, float precio, float importe, String metodoPago, String empresa, int vehiculoId) {
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public Servicio(Integer id, Date fecha, float cantidad, String descripcion, float precio, float importe, String metodoPago, String empresa, String observaciones, Date proximoServicio, Vehiculo vehiculo, Float km) {
         this.id = id;
         this.fecha = fecha;
         this.cantidad = cantidad;
@@ -93,19 +100,37 @@ public class Servicio implements Serializable {
         this.importe = importe;
         this.metodoPago = metodoPago;
         this.empresa = empresa;
-        this.vehiculoId = vehiculoId;
+        this.observaciones = observaciones;
+        this.proximoServicio = proximoServicio;
+        this.vehiculo = vehiculo;
+        this.km = km;
     }
+
+    public Float getKm() {
+        return km;
+    }
+
+    public void setKm(Float km) {
+        this.km = km;
+    }
+
 
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
+
         this.id = id;
     }
 
     public Date getFecha() {
-        return fecha;
+        if (fecha != null) {
+            return new java.sql.Date(fecha.getTime());
+        } else {
+            return fecha = null;
+        }
+
     }
 
     public void setFecha(Date fecha) {
@@ -169,19 +194,16 @@ public class Servicio implements Serializable {
     }
 
     public Date getProximoServicio() {
-        return proximoServicio;
+        if (proximoServicio != null) {
+            return new java.sql.Date(proximoServicio.getTime());
+        } else {
+            return proximoServicio = null;
+        }
+
     }
 
     public void setProximoServicio(Date proximoServicio) {
         this.proximoServicio = proximoServicio;
-    }
-
-    public int getVehiculoId() {
-        return vehiculoId;
-    }
-
-    public void setVehiculoId(int vehiculoId) {
-        this.vehiculoId = vehiculoId;
     }
 
     @Override
@@ -208,5 +230,5 @@ public class Servicio implements Serializable {
     public String toString() {
         return "com.model.Servicio[ id=" + id + " ]";
     }
-    
+
 }

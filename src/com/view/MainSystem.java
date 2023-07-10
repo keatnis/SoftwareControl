@@ -48,9 +48,6 @@ public class MainSystem extends javax.swing.JFrame {
         }
     }
 
-    public void showForm(Component form) {
-        showForm(form, "");
-    }
 
     public void showForm(Component form, String title) {
         lbTitle.setText(title);
@@ -77,12 +74,23 @@ public class MainSystem extends javax.swing.JFrame {
         lbTitle = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         Dasboard = new javax.swing.JMenu();
-        menuPersonal = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        registrarVehiculo = new javax.swing.JMenu();
+        menuAddVehiculo = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        registrarServicio = new javax.swing.JMenuItem();
+        programarServicio = new javax.swing.JMenuItem();
+        historialServicio = new javax.swing.JMenuItem();
         incidencias = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuPersonal = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         cambiarAvatar.setText("Cambiar Icono");
         cambiarAvatar.setActionCommand("cvbvb");
@@ -163,7 +171,7 @@ public class MainSystem extends javax.swing.JFrame {
         MenuBar.setMaximumSize(new java.awt.Dimension(1054, 32769));
         MenuBar.setPreferredSize(new java.awt.Dimension(903, 28));
 
-        Dasboard.setText("Home");
+        Dasboard.setText("*");
         Dasboard.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         Dasboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -176,6 +184,81 @@ public class MainSystem extends javax.swing.JFrame {
             }
         });
         MenuBar.add(Dasboard);
+
+        jMenu2.setText("Fletes");
+
+        jMenuItem5.setText("Registrar flete");
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem4.setText("Registrar Lugar de Trabajo");
+        jMenu2.add(jMenuItem4);
+
+        MenuBar.add(jMenu2);
+
+        jMenu4.setText("Recarga Combustible");
+        MenuBar.add(jMenu4);
+
+        registrarVehiculo.setText("Vehiculos");
+
+        menuAddVehiculo.setText("Registrar Vehiculo");
+        menuAddVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAddVehiculoActionPerformed(evt);
+            }
+        });
+        registrarVehiculo.add(menuAddVehiculo);
+
+        MenuBar.add(registrarVehiculo);
+
+        jMenu3.setText("Servicios");
+
+        registrarServicio.setText("Registrar servicio");
+        registrarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarServicioActionPerformed(evt);
+            }
+        });
+        jMenu3.add(registrarServicio);
+
+        programarServicio.setText("Programar servicio");
+        programarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                programarServicioActionPerformed(evt);
+            }
+        });
+        jMenu3.add(programarServicio);
+
+        historialServicio.setText("Historial de Servicios");
+        historialServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historialServicioActionPerformed(evt);
+            }
+        });
+        jMenu3.add(historialServicio);
+
+        MenuBar.add(jMenu3);
+
+        incidencias.setText("Usuarios");
+        incidencias.setFocusPainted(true);
+        incidencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                incidenciasActionPerformed(evt);
+            }
+        });
+        incidencias.add(jSeparator2);
+
+        jMenuItem2.setText("Registrar Usuario");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        incidencias.add(jMenuItem2);
+
+        MenuBar.add(incidencias);
+
+        jMenu1.setText("Nomina");
+        MenuBar.add(jMenu1);
 
         menuPersonal.setText("Operadores");
         menuPersonal.addActionListener(new java.awt.event.ActionListener() {
@@ -201,25 +284,6 @@ public class MainSystem extends javax.swing.JFrame {
         menuPersonal.add(jMenuItem3);
 
         MenuBar.add(menuPersonal);
-
-        incidencias.setText("Usuarios");
-        incidencias.setFocusPainted(true);
-        incidencias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                incidenciasActionPerformed(evt);
-            }
-        });
-        incidencias.add(jSeparator2);
-
-        jMenuItem2.setText("Usuarios");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        incidencias.add(jMenuItem2);
-
-        MenuBar.add(incidencias);
 
         setJMenuBar(MenuBar);
 
@@ -300,6 +364,22 @@ public class MainSystem extends javax.swing.JFrame {
            this.showForm(new Dashboard(), "Dasboard");
     }//GEN-LAST:event_DasboardActionPerformed
 
+    private void menuAddVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddVehiculoActionPerformed
+        this.showForm(new ListaVehiculos(), "Menu: Vehiculos");
+    }//GEN-LAST:event_menuAddVehiculoActionPerformed
+
+    private void registrarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarServicioActionPerformed
+       this.showForm(new Servicios(), "Menu: Servicios");
+    }//GEN-LAST:event_registrarServicioActionPerformed
+
+    private void programarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_programarServicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_programarServicioActionPerformed
+
+    private void historialServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialServicioActionPerformed
+        this.showForm(new HistorialServicios(), "Menu: Servicios > Historial de servicios de un vehículo ");
+    }//GEN-LAST:event_historialServicioActionPerformed
+
 //    public static void main(ModelUsers user) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
@@ -324,18 +404,29 @@ public class MainSystem extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenuItem cambiarAvatar;
     private javax.swing.JMenuItem cambiarContraseña;
+    private javax.swing.JMenuItem historialServicio;
     private javax.swing.JMenu incidencias;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     public javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUser;
+    private javax.swing.JMenuItem menuAddVehiculo;
     private javax.swing.JMenu menuPersonal;
     public javax.swing.JPanel panelBody;
     private javax.swing.JPanel panelEnc;
     private javax.swing.JPopupMenu popMenuUsuario;
+    private javax.swing.JMenuItem programarServicio;
+    private javax.swing.JMenuItem registrarServicio;
+    private javax.swing.JMenu registrarVehiculo;
     // End of variables declaration//GEN-END:variables
 }

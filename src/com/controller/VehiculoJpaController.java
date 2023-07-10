@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
@@ -14,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,6 +34,8 @@ public class VehiculoJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(vehiculo);
             em.getTransaction().commit();
+            JOptionPane.showMessageDialog(
+                    null, "Vehiculo registrado correctamente");
         } finally {
             if (em != null) {
                 em.close();
@@ -133,5 +132,22 @@ public class VehiculoJpaController implements Serializable {
             em.close();
         }
     }
+       public boolean vehiculoExist(Integer id) {
+        String query = "select count(vehiculo_id) from VEHICULO  where vehiculo_id=" + id;
+        final EntityManager em = getEntityManager();
+        // you will always get a single result
+        Long count = (Long) em.createNativeQuery(query).getSingleResult();
+        return ((count.equals(0L)) ? false : true);
+
+    }
+       public List<Vehiculo> getVehiculoByMMN(String key){
+           String sqlString = "SELECT * FROM VEHICULO as v WHERE v.marca like '%"+key+"%' "
+                   + "OR v.modelo LIKE '%"+key+"%' OR v.num_serie LIKE '%"+key+"%'";
+           EntityManager em = getEntityManager();
+           List<Vehiculo> list = em.createNativeQuery(sqlString,Vehiculo.class)
+                   .setParameter("marca", key).getResultList();
+                   return list;
+           
+       }
     
 }

@@ -49,7 +49,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="info" min="-2" pref="278" max="-2" attributes="0"/>
+                                  <Component id="info" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                       <Component id="lightDarkMode1" min="-2" pref="218" max="-2" attributes="0"/>
@@ -94,8 +94,29 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="info">
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="false"/>
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
+                  <Component id="lbIcon" min="-2" pref="198" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Component id="lbIcon" min="-2" pref="185" max="-2" attributes="0"/>
+                  <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lbIcon">
@@ -104,21 +125,14 @@
               <Image iconType="3" name="/com/utils/icon/icon.jpg"/>
             </Property>
           </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="38" y="6" width="198" height="185"/>
-            </Constraint>
-          </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Software"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="JetBrains Mono NL ExtraBold" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Agustina V&#xe1;zquez Ortiz"/>
           </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="115" y="203" width="-1" height="-1"/>
-            </Constraint>
-          </Constraints>
         </Component>
       </SubComponents>
     </Container>

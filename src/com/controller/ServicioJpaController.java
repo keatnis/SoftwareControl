@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
@@ -12,8 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,6 +35,8 @@ public class ServicioJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(servicio);
             em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null,
+                    "Servicio registrado correctamente");
         } finally {
             if (em != null) {
                 em.close();
@@ -51,11 +51,15 @@ public class ServicioJpaController implements Serializable {
             em.getTransaction().begin();
             servicio = em.merge(servicio);
             em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null,
+                    "Datos del servicio actualizado correctamente");
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = servicio.getId();
                 if (findServicio(id) == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "The servicio with id " + id + " no longer exists.");
                     throw new NonexistentEntityException("The servicio with id " + id + " no longer exists.");
                 }
             }
@@ -73,6 +77,8 @@ public class ServicioJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Servicio servicio;
+            JOptionPane.showMessageDialog(null,
+                    "Registro de servicio eliminado!");
             try {
                 servicio = em.getReference(Servicio.class, id);
                 servicio.getId();
@@ -133,5 +139,57 @@ public class ServicioJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Servicio> getServicesOrderByDate() {
+        String sqlString = "SELECT s.*,v.* FROM SERVICIO s\n"
+                + "INNER JOIN VEHICULO v ON s.vehiculo_id=v.vehiculo_id \n"
+                + "ORDER BY s.fecha DESC;";
+        EntityManager em = getEntityManager();
+        List<Servicio> list = em.createNativeQuery(sqlString, Servicio.class)
+                .getResultList();
+        return list;
+
+    }
+
+    public List<Servicio> getServicesById(Integer id) {
+        String sqlString = "SELECT s.*,v.* FROM SERVICIO s\n"
+                + "INNER JOIN VEHICULO v ON s.vehiculo_id=v.vehiculo_id \n"
+                + "WHERE s.vehiculo_id =? ORDER BY s.fecha DESC;";
+        EntityManager em = getEntityManager();
+        List<Servicio> list = em.createNativeQuery(sqlString, Servicio.class)
+                .setParameter(1, id)
+                .getResultList();
+        return list;
+
+    }
+
+    public void updateKMByIdVehiculo(Integer idVehiculo, Float km) {
+        String query = "UPDATE VEHICULO SET km_actual =? WHERE vehiculo_id =?";
+        EntityManager em = getEntityManager();
+        // you will always get a single result
+        try {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            Integer res = em.createNativeQuery(query)
+                    .setParameter(1, km)
+                    .setParameter(2, idVehiculo)
+                    .executeUpdate();
+            System.out.println("res update " + res);
+            em.persist(res);
+            tx.commit();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public boolean servicioExits(Integer id) {
+        String query = "select count(id) from SERVICIO  where id=" + id;
+        final EntityManager em = getEntityManager();
+        // you will always get a single result
+        Long count = (Long) em.createNativeQuery(query).getSingleResult();
+        return ((count.equals(0L)) ? false : true);
+
+    }
 }

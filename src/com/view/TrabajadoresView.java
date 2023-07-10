@@ -6,13 +6,18 @@ import com.model.ContactoEmergencia;
 import com.model.Operador;
 import com.mysql.cj.jdbc.Blob;
 import com.utils.ChooseFile;
+import com.utils.ExportExcel;
 import com.utils.Filter;
 import com.utils.Validaciones;
 import com.utils.table.RenderTable;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.rowset.serial.*;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -75,8 +80,10 @@ public class TrabajadoresView extends javax.swing.JPanel {
             /*establecemos el modelo  al Jtable llamado jTabla*/
 
         }
+        
         table.setRowHeight(30);
         table.setModel(model);
+         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.doLayout();
         /* asignamos el ancho de cada columna de la tabla*/
 
@@ -95,7 +102,7 @@ public class TrabajadoresView extends javax.swing.JPanel {
         //pasando datos al formulario
 
         String[] nombre = String.valueOf(tblOperador.getValueAt(row, 1)).split(" ");
-        System.out.println("long " + nombre.length);
+       
         switch (nombre.length) {
             case 1:
                 txtNombre.setText(nombre[0]);
@@ -262,6 +269,7 @@ public class TrabajadoresView extends javax.swing.JPanel {
         btnNew = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnExport = new javax.swing.JButton();
         panelForm = new javax.swing.JPanel();
         form = new javax.swing.JPanel();
         lbNombre = new javax.swing.JLabel();
@@ -312,8 +320,6 @@ public class TrabajadoresView extends javax.swing.JPanel {
 
         panelList.setLayout(new java.awt.BorderLayout(0, 10));
 
-        panelSearch.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         txtSearch.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtSearch.setMaximumSize(null);
         txtSearch.setPlaceholder("Buscar ...");
@@ -322,7 +328,17 @@ public class TrabajadoresView extends javax.swing.JPanel {
                 txtSearchKeyTyped(evt);
             }
         });
-        panelSearch.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, -1));
+
+        javax.swing.GroupLayout panelSearchLayout = new javax.swing.GroupLayout(panelSearch);
+        panelSearch.setLayout(panelSearchLayout);
+        panelSearchLayout.setHorizontalGroup(
+            panelSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        panelSearchLayout.setVerticalGroup(
+            panelSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         panelList.add(panelSearch, java.awt.BorderLayout.PAGE_START);
 
@@ -344,7 +360,7 @@ public class TrabajadoresView extends javax.swing.JPanel {
 
         options.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setLayout(new java.awt.GridLayout(3, 0, 0, 4));
+        jPanel1.setLayout(new java.awt.GridLayout(5, 0, 0, 4));
 
         btnNew.setText("Agregar Nuevo");
         btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -370,6 +386,14 @@ public class TrabajadoresView extends javax.swing.JPanel {
         });
         jPanel1.add(btnDelete);
 
+        btnExport.setText("Exportar datos");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnExport);
+
         options.add(jPanel1, new java.awt.GridBagConstraints());
 
         panelList.add(options, java.awt.BorderLayout.EAST);
@@ -377,7 +401,7 @@ public class TrabajadoresView extends javax.swing.JPanel {
 
         main.add(panelList, "card2");
 
-        panelForm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelForm.setLayout(new java.awt.GridLayout());
 
         form.setMaximumSize(null);
 
@@ -654,14 +678,14 @@ public class TrabajadoresView extends javax.swing.JPanel {
                     .addGroup(formLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                         .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
                             .addComponent(btnCancel))
                         .addGap(16, 16, 16))))
         );
 
-        panelForm.add(form, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelForm.add(form);
 
         main.add(panelForm, "card3");
 
@@ -742,11 +766,20 @@ public class TrabajadoresView extends javax.swing.JPanel {
       this.deleteAction();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        try {
+            ExportExcel.exportarExcel(tblOperador);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExport;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cmbParentescoCont;
