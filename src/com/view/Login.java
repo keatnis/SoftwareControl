@@ -41,11 +41,6 @@ public class Login extends javax.swing.JFrame {
     public Image toImage(Icon icon) {
         return ((ImageIcon) icon).getImage();
     }
-
-    /*
-    thread for the MainSystem
-    loading the feactures
-     */
     private void startThread(String user) {
         Thread thread = new Thread(new Runnable() {
             @Override
