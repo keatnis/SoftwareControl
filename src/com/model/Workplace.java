@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -41,6 +40,13 @@ public class Workplace implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre_trabajo")
     private String nombreTrabajo;
+    @Basic(optional = false)
+    @Column(name = "fecha_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+    @Column(name = "fehca_fin")
+    @Temporal(TemporalType.DATE)
+    private Date fechaFin;
     @Column(name = "periodo")
     private String periodo;
 
@@ -51,10 +57,37 @@ public class Workplace implements Serializable {
         this.id = id;
     }
 
-    public Workplace(Integer id, String claveTrabajo, String nombreTrabajo) {
+    public Workplace(Integer id, String claveTrabajo, String nombreTrabajo, Date fechaInicio, Date fechaFin, String periodo) {
         this.id = id;
         this.claveTrabajo = claveTrabajo;
         this.nombreTrabajo = nombreTrabajo;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.periodo = periodo;
+    }
+
+    public Date getFechaInicio() {
+        if (fechaInicio != null) {
+            return new java.sql.Date(fechaInicio.getTime());
+        } else {
+            return fechaInicio = null;
+        }
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        if (fechaFin != null) {
+            return new java.sql.Date(fechaFin.getTime());
+        } else {
+            return fechaFin = null;
+        }
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public Integer getId() {
@@ -113,5 +146,5 @@ public class Workplace implements Serializable {
     public String toString() {
         return "com.model.Workplace[ id=" + id + " ]";
     }
-    
+
 }

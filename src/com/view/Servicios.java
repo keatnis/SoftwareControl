@@ -18,6 +18,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author keatnis
  */
+/*
+TODO: UPDATE KM ENTITY VEHICULO Y ACTUALIZAR 
+*/
 public class Servicios extends javax.swing.JPanel {
 
     public static String FECHA_SERVICIO;
@@ -407,8 +410,8 @@ public class Servicios extends javax.swing.JPanel {
                             .addComponent(jLabel13)
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         btnSearch.setText("Buscar");
@@ -765,7 +768,7 @@ public class Servicios extends javax.swing.JPanel {
             // this.showForm(list);
             this.showData(tblAllServices);
             btnNew.setEnabled(true);
-        } else if (btnSave.getText().startsWith("Actualiz")) {
+        } else if (btnSave.getText().startsWith("Actualizar")) {
             update();
             clearAll();
             this.showForms(false, true);
@@ -777,6 +780,7 @@ public class Servicios extends javax.swing.JPanel {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         clearAll();
         this.showForms(false, true);
+        this.btnNew.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyTyped

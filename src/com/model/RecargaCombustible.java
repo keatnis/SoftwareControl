@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.model;
 
 import java.io.Serializable;
@@ -11,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -51,7 +50,9 @@ public class RecargaCombustible implements Serializable {
     @Basic(optional = false)
     @Column(name = "monto")
     private String monto;
-
+     @ManyToOne()
+    @JoinColumn(name = "detalle_combustible_id")
+    private DetalleCombustible detalleCompustible;
     public RecargaCombustible() {
     }
 
@@ -66,6 +67,26 @@ public class RecargaCombustible implements Serializable {
         this.monto = monto;
     }
 
+    public RecargaCombustible(Integer id, Float odometroActual, String tipoCombustible, float precioxlitro, float litros, String monto, DetalleCombustible detalleCompustible) {
+        this.id = id;
+        this.odometroActual = odometroActual;
+        this.tipoCombustible = tipoCombustible;
+        this.precioxlitro = precioxlitro;
+        this.litros = litros;
+        this.monto = monto;
+        this.detalleCompustible = detalleCompustible;
+    }
+
+    public DetalleCombustible getDetalleCompustible() {
+        return detalleCompustible;
+    }
+
+    public void setDetalleCompustible(DetalleCombustible detalleCompustible) {
+        this.detalleCompustible = detalleCompustible;
+    }
+
+   
+    
     public Integer getId() {
         return id;
     }

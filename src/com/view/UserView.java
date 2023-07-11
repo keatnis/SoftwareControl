@@ -2,12 +2,8 @@ package com.view;
 
 import com.dao.UserDao;
 import com.utils.Hash;
-import com.utils.table.RenderTable;
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.util.List;
 import com.utils.Filter;
-import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,11 +21,18 @@ public class UserView extends javax.swing.JPanel {
      */
     public UserView() {
         initComponents();
-       this.userDao = new UserDao();
+        this.userDao = new UserDao();
         showData(tblUser);
-        //this.showForm(list);
+        this.showForms(false, true);
+    }
 
-        // password.putClientProperty("PasswordField.showRevealButton ", true);
+    public void showForms(boolean showForm, boolean showList) {
+
+        panelForm.setVisible(showForm);
+        if (panelForm.isVisible()) {
+            this.getAccessibleContext();
+        }
+        panelList.setVisible(showList);
     }
 
     //metodo para  asignar los valores de cada atributo y usar el dao para guardar los datos en la db
@@ -114,7 +117,7 @@ public class UserView extends javax.swing.JPanel {
         password.setEnabled(false);
         txtUsuario.setText((String) tblUser.getValueAt(row, 2));
         cmbRole.setSelectedItem(tblUser.getValueAt(row, 3));
-
+        this.showForms(true, false);
         //  showForm(formPanel);
     }
 
@@ -132,6 +135,7 @@ public class UserView extends javax.swing.JPanel {
         user.setRole((String) cmbRole.getSelectedItem());
         userDao.update(user);
         showData(tblUser);
+        this.showForms(false, true);
     }
 
     private void deleteAction() {
@@ -139,6 +143,7 @@ public class UserView extends javax.swing.JPanel {
                 tblUser.getValueAt(tblUser.getSelectedRow(), 0)
                         .toString());
         userDao.delete(idUser);
+        this.showForms(false, true);
 
     }
 
@@ -148,7 +153,7 @@ public class UserView extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         root = new javax.swing.JPanel();
-        list = new javax.swing.JPanel();
+        panelList = new javax.swing.JPanel();
         txtSearch = new com.utils.components.txtPlaceholder();
         panelOptions = new javax.swing.JPanel();
         btnNew = new javax.swing.JButton();
@@ -156,7 +161,7 @@ public class UserView extends javax.swing.JPanel {
         tbnDelete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUser = new javax.swing.JTable();
-        formPanel = new javax.swing.JPanel();
+        panelForm = new javax.swing.JPanel();
         options = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -176,7 +181,9 @@ public class UserView extends javax.swing.JPanel {
 
         setLayout(new java.awt.GridBagLayout());
 
-        list.setPreferredSize(new java.awt.Dimension(800, 400));
+        root.setLayout(new java.awt.CardLayout());
+
+        panelList.setPreferredSize(new java.awt.Dimension(800, 400));
 
         txtSearch.setPlaceholder("Buscar ...");
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -226,34 +233,36 @@ public class UserView extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblUser);
 
-        javax.swing.GroupLayout listLayout = new javax.swing.GroupLayout(list);
-        list.setLayout(listLayout);
-        listLayout.setHorizontalGroup(
-            listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(listLayout.createSequentialGroup()
-                .addGroup(listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelListLayout = new javax.swing.GroupLayout(panelList);
+        panelList.setLayout(panelListLayout);
+        panelListLayout.setHorizontalGroup(
+            panelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListLayout.createSequentialGroup()
+                .addGroup(panelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(listLayout.createSequentialGroup()
+                    .addGroup(panelListLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)
                         .addComponent(panelOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        listLayout.setVerticalGroup(
-            listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(listLayout.createSequentialGroup()
+        panelListLayout.setVerticalGroup(
+            panelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addGroup(listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(listLayout.createSequentialGroup()
+                    .addGroup(panelListLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(panelOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        formPanel.setPreferredSize(new java.awt.Dimension(800, 400));
+        root.add(panelList, "card2");
+
+        panelForm.setPreferredSize(new java.awt.Dimension(800, 400));
 
         btnSave.setBackground(new java.awt.Color(51, 51, 51));
         btnSave.setFont(new java.awt.Font("Cantarell", 1, 16)); // NOI18N
@@ -328,44 +337,27 @@ public class UserView extends javax.swing.JPanel {
         cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Admin", "User" }));
         form.add(cmbRole);
 
-        javax.swing.GroupLayout formPanelLayout = new javax.swing.GroupLayout(formPanel);
-        formPanel.setLayout(formPanelLayout);
-        formPanelLayout.setHorizontalGroup(
-            formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(formPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelFormLayout = new javax.swing.GroupLayout(panelForm);
+        panelForm.setLayout(panelFormLayout);
+        panelFormLayout.setHorizontalGroup(
+            panelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFormLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(form, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(formPanelLayout.createSequentialGroup()
+            .addGroup(panelFormLayout.createSequentialGroup()
                 .addGap(459, 459, 459)
                 .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        formPanelLayout.setVerticalGroup(
-            formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(formPanelLayout.createSequentialGroup()
+        panelFormLayout.setVerticalGroup(
+            panelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFormLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(form, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout rootLayout = new javax.swing.GroupLayout(root);
-        root.setLayout(rootLayout);
-        rootLayout.setHorizontalGroup(
-            rootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rootLayout.createSequentialGroup()
-                .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(list, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
-        );
-        rootLayout.setVerticalGroup(
-            rootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rootLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        root.add(panelForm, "card3");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -410,13 +402,13 @@ public class UserView extends javax.swing.JPanel {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         cleaAll();
-//        showForm(list);
+        this.showForms(false, true);
         btnNew.setEnabled(true);
 
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-//        this.showForm(formPanel);
+        this.showForms(true, false);
         btnNew.setEnabled(false);
         btnSave.setText("guardar");
         btnSave.repaint();
@@ -431,7 +423,6 @@ public class UserView extends javax.swing.JPanel {
     javax.swing.JButton btnSave;
     javax.swing.JComboBox<String> cmbRole;
     javax.swing.JPanel form;
-    javax.swing.JPanel formPanel;
     javax.swing.JLabel jLabel1;
     javax.swing.JScrollPane jScrollPane1;
     javax.swing.JLabel lbAma;
@@ -439,8 +430,9 @@ public class UserView extends javax.swing.JPanel {
     javax.swing.JLabel lbName;
     javax.swing.JLabel lbUser;
     javax.swing.JLabel lbUser1;
-    javax.swing.JPanel list;
     javax.swing.JPanel options;
+    javax.swing.JPanel panelForm;
+    javax.swing.JPanel panelList;
     javax.swing.JPanel panelOptions;
     javax.swing.JPasswordField password;
     javax.swing.JPanel root;

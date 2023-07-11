@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
@@ -132,6 +128,14 @@ public class WorkplaceJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+      public boolean workplaceExist(Integer id) {
+        String query = "select count(id) from WORKPLACE  where id=" + id;
+        final EntityManager em = getEntityManager();
+        // you will always get a single result
+        Long count = (Long) em.createNativeQuery(query).getSingleResult();
+        return ((count.equals(0L)) ? false : true);
+
     }
     
 }

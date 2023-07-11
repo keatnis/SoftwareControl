@@ -3,6 +3,7 @@ package com.view;
 import com.dao.UserDao;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.model.User;
 import java.awt.Image;
@@ -27,13 +28,14 @@ public class Login extends javax.swing.JFrame {
      */
     private Login splashFrame = this;
     public static boolean frameInicio = false;
+    public static boolean btnLog = true;
 
     public Login() {
         initComponents();
         Image img4 = this.toImage(new ImageIcon(getClass().getResource("/com/utils/icon/icon.jpg")));
         ImageIcon img3 = new ImageIcon(img4.getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_SMOOTH));
         lbIcon.setIcon(img3);
-
+        btnLog = true;
     }
 
     public Image toImage(Icon icon) {
@@ -49,7 +51,7 @@ public class Login extends javax.swing.JFrame {
             @Override
             public void run() {
                 MainSystem appFrame = new MainSystem(user, splashFrame);
-           
+
                 if (!appFrame.isActive()) {
                     appFrame.setLocationRelativeTo(null);
                     appFrame.setVisible(true);
@@ -79,7 +81,7 @@ public class Login extends javax.swing.JFrame {
 
             if (usr.get(0).getPassword().equals(nuevopass)) {
                 startThread(usr.get(0).getNombre().toString());
-               
+
             }
 
             //  startThread();
@@ -161,9 +163,8 @@ public class Login extends javax.swing.JFrame {
         password.setText("admin");
         jPanel1.add(password);
 
-        btnLogin.setBackground(new java.awt.Color(51, 51, 51));
+        btnLogin.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.default.focusColor"));
         btnLogin.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 0));
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,6 +237,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         login();
+        btnLog = false;
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -252,7 +254,8 @@ public class Login extends javax.swing.JFrame {
     public static void main(String args[]) {
 
         FlatLaf.registerCustomDefaultsSource("com.theme");
-        FlatDarculaLaf.setup();
+
+        FlatLightLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);

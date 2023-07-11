@@ -4,7 +4,6 @@ import com.dao.TrabajadoresDAO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.model.ContactoEmergencia;
 import com.model.Operador;
-import com.mysql.cj.jdbc.Blob;
 import com.utils.ChooseFile;
 import com.utils.ExportExcel;
 import com.utils.Filter;
@@ -12,10 +11,6 @@ import com.utils.Validaciones;
 import com.utils.table.RenderTable;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sql.rowset.serial.*;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -358,8 +353,6 @@ public class TrabajadoresView extends javax.swing.JPanel {
 
         panelList.add(spt, java.awt.BorderLayout.CENTER);
 
-        options.setLayout(new java.awt.GridBagLayout());
-
         jPanel1.setLayout(new java.awt.GridLayout(5, 0, 0, 4));
 
         btnNew.setText("Agregar Nuevo");
@@ -394,14 +387,25 @@ public class TrabajadoresView extends javax.swing.JPanel {
         });
         jPanel1.add(btnExport);
 
-        options.add(jPanel1, new java.awt.GridBagConstraints());
+        javax.swing.GroupLayout optionsLayout = new javax.swing.GroupLayout(options);
+        options.setLayout(optionsLayout);
+        optionsLayout.setHorizontalGroup(
+            optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        optionsLayout.setVerticalGroup(
+            optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(optionsLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 236, Short.MAX_VALUE))
+        );
 
         panelList.add(options, java.awt.BorderLayout.EAST);
         options.getAccessibleContext().setAccessibleName("Option");
 
         main.add(panelList, "card2");
 
-        panelForm.setLayout(new java.awt.GridLayout());
+        panelForm.setLayout(new java.awt.GridLayout(1, 0));
 
         form.setMaximumSize(null);
 

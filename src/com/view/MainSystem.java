@@ -30,7 +30,7 @@ public class MainSystem extends javax.swing.JFrame {
         setProgress(65, "Cargando interfaces");
         // this.setShape(new RoundRectangle2D.Double(0, 0, getWidth(),getHeight(), 20, 20));
      
-        lbUser.setText("USER: "+user);
+        lbUser.setText("Usuario: "+user);
         this.repaint();
         setProgress(65, "Cargando interfaces");
         setProgress(100, "Carga completa");
@@ -76,8 +76,8 @@ public class MainSystem extends javax.swing.JFrame {
         Dasboard = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        menuWorkplace = new javax.swing.JMenuItem();
+        recarga = new javax.swing.JMenuItem();
         registrarVehiculo = new javax.swing.JMenu();
         menuAddVehiculo = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -90,7 +90,6 @@ public class MainSystem extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuPersonal = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         cambiarAvatar.setText("Cambiar Icono");
         cambiarAvatar.setActionCommand("cvbvb");
@@ -133,7 +132,7 @@ public class MainSystem extends javax.swing.JFrame {
         panelEnc.setOpaque(false);
         panelEnc.setPreferredSize(new java.awt.Dimension(1374, 74));
 
-        lbUser.setFont(new java.awt.Font("JetBrains Mono NL Light", 1, 18)); // NOI18N
+        lbUser.setFont(new java.awt.Font("JetBrains Mono NL Light", 1, 14)); // NOI18N
         lbUser.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbUser.setText("User Name");
         lbUser.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -188,15 +187,30 @@ public class MainSystem extends javax.swing.JFrame {
         jMenu2.setText("Fletes");
 
         jMenuItem5.setText("Registrar flete");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
-        jMenuItem4.setText("Registrar Lugar de Trabajo");
-        jMenu2.add(jMenuItem4);
+        menuWorkplace.setText("Registrar Lugar de Trabajo");
+        menuWorkplace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuWorkplaceActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuWorkplace);
+
+        recarga.setText("Recarga de combustible");
+        recarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recargaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(recarga);
 
         MenuBar.add(jMenu2);
-
-        jMenu4.setText("Recarga Combustible");
-        MenuBar.add(jMenu4);
 
         registrarVehiculo.setText("Vehiculos");
 
@@ -267,21 +281,13 @@ public class MainSystem extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setText("List");
+        jMenuItem1.setText("Trabajadores");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         menuPersonal.add(jMenuItem1);
-
-        jMenuItem3.setText("Agegar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        menuPersonal.add(jMenuItem3);
 
         MenuBar.add(menuPersonal);
 
@@ -322,7 +328,7 @@ public class MainSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_DasboardMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        this.showForm(new TrabajadoresView(), "TRABAJADORES");
+        this.showForm(new TrabajadoresView(), "Menú > Trabajadores");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void CerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarSesionActionPerformed
@@ -344,13 +350,6 @@ public class MainSystem extends javax.swing.JFrame {
     private void cambiarAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarAvatarActionPerformed
        // this.showForm(new UserView(), "Lista de Personal");
     }//GEN-LAST:event_cambiarAvatarActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        //this.showForm(new MainPanel(), "Lista Personalizada");
-      
-        //this.getContentPane().add(new MainPanel());
-
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void incidenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incidenciasActionPerformed
         
@@ -379,6 +378,18 @@ public class MainSystem extends javax.swing.JFrame {
     private void historialServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialServicioActionPerformed
         this.showForm(new HistorialServicios(), "Menu: Servicios > Historial de servicios de un vehículo ");
     }//GEN-LAST:event_historialServicioActionPerformed
+
+    private void menuWorkplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuWorkplaceActionPerformed
+       this.showForm(new LugarTrabajo(), "Menú : Flete > Lugar de Trabajo");
+    }//GEN-LAST:event_menuWorkplaceActionPerformed
+
+    private void recargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recargaActionPerformed
+        this.showForm(new RecargaCombustible(), "Flete > Recarga de combustible");
+    }//GEN-LAST:event_recargaActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    this.showForm(new Flete(), "Flete > Recgistro de flete");
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 //    public static void main(ModelUsers user) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {
@@ -410,11 +421,8 @@ public class MainSystem extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -422,10 +430,12 @@ public class MainSystem extends javax.swing.JFrame {
     private javax.swing.JLabel lbUser;
     private javax.swing.JMenuItem menuAddVehiculo;
     private javax.swing.JMenu menuPersonal;
+    private javax.swing.JMenuItem menuWorkplace;
     public javax.swing.JPanel panelBody;
     private javax.swing.JPanel panelEnc;
     private javax.swing.JPopupMenu popMenuUsuario;
     private javax.swing.JMenuItem programarServicio;
+    private javax.swing.JMenuItem recarga;
     private javax.swing.JMenuItem registrarServicio;
     private javax.swing.JMenu registrarVehiculo;
     // End of variables declaration//GEN-END:variables
