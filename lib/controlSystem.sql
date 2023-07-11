@@ -32,7 +32,7 @@ CREATE TABLE `ASIGNACION_UNIDAD` (
   `km_inicio` float DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `CONTACTO_EMERGENCIA` (
   `parentesco` varchar(255) DEFAULT NULL,
   `telefono` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +87,7 @@ CREATE TABLE `FLETE` (
   `recibe` varchar(255) DEFAULT NULL,
   `responsable` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +118,7 @@ CREATE TABLE `NOMINA` (
   `sueldo_diario` float DEFAULT NULL,
   `sueldo_neto` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +154,7 @@ CREATE TABLE `OPERADOR` (
   `telefono2` varchar(255) DEFAULT NULL,
   `typeblood` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`operador_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +181,7 @@ CREATE TABLE `OPERADOR_EMERGENCIA` (
   KEY `FK_OPERADOR_EMERGENCIA_contactoEmergencia_id` (`contactoEmergencia_id`),
   CONSTRAINT `FK_OPERADOR_EMERGENCIA_contactoEmergencia_id` FOREIGN KEY (`contactoEmergencia_id`) REFERENCES `CONTACTO_EMERGENCIA` (`id`),
   CONSTRAINT `FK_OPERADOR_EMERGENCIA_operador_id` FOREIGN KEY (`operador_id`) REFERENCES `OPERADOR` (`operador_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ CREATE TABLE `RECARGA_COMBUSTIBLE` (
   `precioxlitro` float DEFAULT NULL,
   `tipo_combustible` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +232,7 @@ CREATE TABLE `SEQUENCE` (
   `SEQ_NAME` varchar(50) NOT NULL,
   `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
   PRIMARY KEY (`SEQ_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +268,7 @@ CREATE TABLE `SERVICIO` (
   PRIMARY KEY (`id`),
   KEY `FK_SERVICIO_vehiculo_id` (`vehiculo_id`),
   CONSTRAINT `FK_SERVICIO_vehiculo_id` FOREIGN KEY (`vehiculo_id`) REFERENCES `VEHICULO` (`vehiculo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,7 +298,7 @@ CREATE TABLE `USER` (
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_nick` (`nickname`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +331,7 @@ CREATE TABLE `VEHICULO` (
   `status` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`vehiculo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,7 +357,7 @@ CREATE TABLE `WORKPLACE` (
   `nombre_trabajo` varchar(255) DEFAULT NULL,
   `periodo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
