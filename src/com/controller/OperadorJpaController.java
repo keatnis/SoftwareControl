@@ -39,7 +39,9 @@ public class OperadorJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(operador);
             em.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Trabajador registrado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "Trabajador registrado correctamente", "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
         } finally {
             if (em != null) {
                 em.close();
@@ -54,7 +56,8 @@ public class OperadorJpaController implements Serializable {
             em.getTransaction().begin();
             operador = em.merge(operador);
             em.getTransaction().commit();
-              JOptionPane.showMessageDialog(null, "Datos actualizados corectamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Datos actualizados corectamente", "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
@@ -77,7 +80,8 @@ public class OperadorJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Operador operador;
-              JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
             try {
                 operador = em.getReference(Operador.class, id);
                 operador.getId();
@@ -139,16 +143,27 @@ public class OperadorJpaController implements Serializable {
         }
     }
 
+    public List<Operador> getOperadorByNameLastName(String key) {
+        String sqlString = "SELECT * FROM OPERADOR as v WHERE v.nombre like '%" + key + "%' "
+                + "OR v.ape_materno LIKE '%" + key + "%' OR v.ape_paterno LIKE '%" + key + "%'";
+        EntityManager em = getEntityManager();
+        List<Operador> list = em.createNativeQuery(sqlString, Operador.class)
+                .setParameter("marca", key).getResultList();
+        return list;
+
+    }
+
     public boolean existOperador(Integer id) {
-       String query = "select count(operador_id) from OPERADOR  where operador_id=" + id;
+        String query = "select count(operador_id) from OPERADOR  where operador_id=" + id;
         final EntityManager em = getEntityManager();
         // you will always get a single result
         Long count = (Long) em.createNativeQuery(query).getSingleResult();
         return ((count.equals(0L)) ? false : true);
     }
+
     public List<Operador> getAllOperador() {
         EntityManager em = getEntityManager();
-        List<Operador> operadors = em.createNativeQuery("Operador.findAllConcat",Operador.class).getResultList();
+        List<Operador> operadors = em.createNativeQuery("Operador.findAllConcat", Operador.class).getResultList();
         return operadors;
     }
 

@@ -65,4 +65,9 @@ public class TrabajadoresDAO implements Trabajadores {
         }
     }
 
+    @Override
+    public List<Operador> searchOperador(String key) {
+      return operadorController.getOperadorByNameLastName(key);
+    }
+
 }

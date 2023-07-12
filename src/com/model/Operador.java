@@ -47,7 +47,7 @@ public class Operador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "operador_id")
     private Integer id;
@@ -90,12 +90,12 @@ public class Operador implements Serializable {
 
     @Column(name = "file")
     private byte[] file;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinTable(name = "OPERADOR_EMERGENCIA",
             joinColumns = @JoinColumn(name = "operador_id", referencedColumnName = "operador_id")
     )
-
+    
     private ContactoEmergencia contactoEmergencia;
 
     public Operador() {

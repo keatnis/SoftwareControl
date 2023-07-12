@@ -210,8 +210,6 @@ public class DetallesCombustible extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.default.hoverBackground"));
-        btnSave.setForeground(javax.swing.UIManager.getDefaults().getColor("TitlePane.closeHoverForeground"));
         btnSave.setText("Guardar");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

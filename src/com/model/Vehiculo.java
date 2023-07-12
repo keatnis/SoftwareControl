@@ -70,7 +70,7 @@ public class Vehiculo implements Serializable {
     private Date finRenta;
     @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Servicio> servicios;
-
+    
     public Vehiculo() {
     }
 

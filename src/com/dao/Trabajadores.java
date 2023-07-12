@@ -14,5 +14,5 @@ public interface Trabajadores {
    void save(Operador operador);
    void edit(Operador operador);
    void delete(Integer id);
-  
+    List<Operador> searchOperador(String key);
 }

@@ -84,12 +84,12 @@ public class MainSystem extends javax.swing.JFrame {
         registrarServicio = new javax.swing.JMenuItem();
         programarServicio = new javax.swing.JMenuItem();
         historialServicio = new javax.swing.JMenuItem();
-        incidencias = new javax.swing.JMenu();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         menuPersonal = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        incidencias = new javax.swing.JMenu();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         cambiarAvatar.setText("Cambiar Icono");
         cambiarAvatar.setActionCommand("cvbvb");
@@ -202,7 +202,7 @@ public class MainSystem extends javax.swing.JFrame {
         });
         jMenu2.add(menuWorkplace);
 
-        recarga.setText("Recarga de combustible");
+        recarga.setText("Detalle Combustible");
         recarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 recargaActionPerformed(evt);
@@ -252,25 +252,6 @@ public class MainSystem extends javax.swing.JFrame {
 
         MenuBar.add(jMenu3);
 
-        incidencias.setText("Usuarios");
-        incidencias.setFocusPainted(true);
-        incidencias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                incidenciasActionPerformed(evt);
-            }
-        });
-        incidencias.add(jSeparator2);
-
-        jMenuItem2.setText("Registrar Usuario");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        incidencias.add(jMenuItem2);
-
-        MenuBar.add(incidencias);
-
         jMenu1.setText("Nomina");
         MenuBar.add(jMenu1);
 
@@ -290,6 +271,25 @@ public class MainSystem extends javax.swing.JFrame {
         menuPersonal.add(jMenuItem1);
 
         MenuBar.add(menuPersonal);
+
+        incidencias.setText("Usuarios");
+        incidencias.setFocusPainted(true);
+        incidencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                incidenciasActionPerformed(evt);
+            }
+        });
+        incidencias.add(jSeparator2);
+
+        jMenuItem2.setText("Registrar Usuario");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        incidencias.add(jMenuItem2);
+
+        MenuBar.add(incidencias);
 
         setJMenuBar(MenuBar);
 
@@ -360,7 +360,7 @@ public class MainSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void DasboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DasboardActionPerformed
-           this.showForm(new Dashboard(), "Dasboard");
+           this.showForm(new Dashboard(), "Dashboard");
     }//GEN-LAST:event_DasboardActionPerformed
 
     private void menuAddVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddVehiculoActionPerformed
@@ -376,7 +376,7 @@ public class MainSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_programarServicioActionPerformed
 
     private void historialServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialServicioActionPerformed
-        this.showForm(new HistorialServicios(), "Menu: Servicios > Historial de servicios de un vehículo ");
+        this.showForm(new HistorialServicios(), "Menu: Servicios > Historial de servicios ");
     }//GEN-LAST:event_historialServicioActionPerformed
 
     private void menuWorkplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuWorkplaceActionPerformed
@@ -384,11 +384,18 @@ public class MainSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_menuWorkplaceActionPerformed
 
     private void recargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recargaActionPerformed
-        this.showForm(new RecargaCombustible(), "Flete > Recarga de combustible");
+        DetallesCombustible dialog = new DetallesCombustible(new javax.swing.JFrame(), true);
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                dialog.setVisible(false);
+            }
+        });
+        dialog.setVisible(true);
     }//GEN-LAST:event_recargaActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-    this.showForm(new Flete(), "Flete > Recgistro de flete");
+    this.showForm(new FleteView(), "Flete > Recgistro de flete");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 //    public static void main(ModelUsers user) {

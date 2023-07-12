@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
@@ -14,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,6 +48,7 @@ public class FleteJpaController implements Serializable {
             em.getTransaction().begin();
             flete = em.merge(flete);
             em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Flete registrado correctamente");
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {

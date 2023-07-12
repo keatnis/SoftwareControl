@@ -90,7 +90,7 @@ public class Servicio implements Serializable {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-
+    
     public Servicio(Integer id, Date fecha, float cantidad, String descripcion, float precio, float importe, String metodoPago, String empresa, String observaciones, Date proximoServicio, Vehiculo vehiculo, Float km) {
         this.id = id;
         this.fecha = fecha;

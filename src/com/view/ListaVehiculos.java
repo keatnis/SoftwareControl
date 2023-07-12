@@ -1,14 +1,14 @@
 package com.view;
 
+import com.dao.DetalleCombustibleDAO;
 import com.dao.VehiculosDAO;
+import com.model.DetalleCombustible;
 import com.model.Vehiculo;
 import com.utils.Filter;
 import com.utils.Validaciones;
 import com.utils.table.RenderTable;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,13 +21,36 @@ public class ListaVehiculos extends javax.swing.JPanel {
     private VehiculosDAO vehiculosDao;
 
     private Vehiculo vehiculo;
+    private DetalleCombustible detalleCombustible;
+    private DetalleCombustibleDAO detalleCombustibleDAO;
 
     public ListaVehiculos() {
         initComponents();
         this.showForms(false, true);
         this.vehiculosDao = new VehiculosDAO();
+        this.detalleCombustibleDAO = new DetalleCombustibleDAO();
         showData(tblVehiculos);
         clearAll();
+        getTipoCombustible();
+    }
+
+    private void getTipoCombustible() {
+        this.cmbTipoCombustible.removeAllItems();
+
+        List<DetalleCombustible> ve = detalleCombustibleDAO.getAllDetalles();
+
+        for (DetalleCombustible vehiculol : ve) {
+
+            this.cmbTipoCombustible.addItem(vehiculol.getTipo());
+
+            detalleCombustible = new DetalleCombustible();
+            detalleCombustible.setId(vehiculol.getId());
+            detalleCombustible.setPrecio(vehiculol.getPrecio());
+            detalleCombustible.setTipo(vehiculol.getTipo());
+
+        }
+        this.cmbTipoCombustible.repaint();
+
     }
 
     private void showData(JTable table) {

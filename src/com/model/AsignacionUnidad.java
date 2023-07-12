@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.model;
 
 import java.io.Serializable;
@@ -12,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -42,21 +40,30 @@ public class AsignacionUnidad implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fechaInicio;
     @Basic(optional = false)
     @Column(name = "fecha_fin")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fechaFin;
     @Basic(optional = false)
     @Column(name = "km_inicio")
-    private float kmInicio;
+    private Float kmInicio;
     @Basic(optional = false)
     @Column(name = "km_final")
-    private float kmFinal;
+    private Float kmFinal;
     @Basic(optional = false)
     @Column(name = "status")
     private String status;
+    @ManyToOne()
+    @JoinColumn(name = "operador_id")
+    private Operador operador;
+    @ManyToOne()
+    @JoinColumn(name = "vehiculo_id")
+    private Vehiculo vehiculo;
+//    @Basic(optional = false)
+////    @Column(name = "operador_id")
+////    private Integer operador_id;
 
     public AsignacionUnidad() {
     }
@@ -65,13 +72,50 @@ public class AsignacionUnidad implements Serializable {
         this.id = id;
     }
 
-    public AsignacionUnidad(Integer id, Date fechaInicio, Date fechaFin, float kmInicio, float kmFinal, String status) {
+    public AsignacionUnidad(Integer id, Date fechaInicio, Date fechaFin, Float kmInicio, Float kmFinal, String status, Operador operador, Vehiculo vehiculo) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.kmInicio = kmInicio;
         this.kmFinal = kmFinal;
         this.status = status;
+        this.operador = operador;
+        this.vehiculo = vehiculo;
+    }
+
+//    public AsignacionUnidad(Integer id, Date fechaInicio, Date fechaFin, Float kmInicio, Float kmFinal, String status, Vehiculo vehiculo, Integer operador_id) {
+//        this.id = id;
+//        this.fechaInicio = fechaInicio;
+//        this.fechaFin = fechaFin;
+//        this.kmInicio = kmInicio;
+//        this.kmFinal = kmFinal;
+//        this.status = status;
+//        this.vehiculo = vehiculo;
+//        this.operador_id = operador_id;
+//    }
+//
+//    public Integer getOperador_id() {
+//        return operador_id;
+//    }
+//
+//    public void setOperador_id(Integer operador_id) {
+//        this.operador_id = operador_id;
+//    }
+
+    public Operador getOperador() {
+        return operador;
+    }
+
+    public void setOperador(Operador operador) {
+        this.operador = operador;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
     public Integer getId() {
@@ -83,7 +127,11 @@ public class AsignacionUnidad implements Serializable {
     }
 
     public Date getFechaInicio() {
-        return fechaInicio;
+          if (this.fechaInicio != null) {
+            return new java.sql.Date(this.fechaInicio.getTime());
+        } else {
+            return this.fechaInicio = null;
+        }
     }
 
     public void setFechaInicio(Date fechaInicio) {
@@ -91,7 +139,11 @@ public class AsignacionUnidad implements Serializable {
     }
 
     public Date getFechaFin() {
-        return fechaFin;
+            if (this.fechaFin != null) {
+            return new java.sql.Date(this.fechaFin.getTime());
+        } else {
+            return this.fechaFin = null;
+        }
     }
 
     public void setFechaFin(Date fechaFin) {
@@ -102,11 +154,11 @@ public class AsignacionUnidad implements Serializable {
         return kmInicio;
     }
 
-    public void setKmInicio(float kmInicio) {
+    public void setKmInicio(Float kmInicio) {
         this.kmInicio = kmInicio;
     }
 
-    public float getKmFinal() {
+    public Float getKmFinal() {
         return kmFinal;
     }
 
@@ -146,5 +198,5 @@ public class AsignacionUnidad implements Serializable {
     public String toString() {
         return "com.model.AsignacionUnidad[ id=" + id + " ]";
     }
-    
+
 }

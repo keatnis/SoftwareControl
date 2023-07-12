@@ -236,12 +236,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSave">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="8c" green="61" id="Button.default.hoverBackground" palette="3" red="3c" type="palette"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="TitlePane.closeHoverForeground" palette="3" red="ff" type="palette"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
           <Events>
