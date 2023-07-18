@@ -49,6 +49,11 @@ Al buscar el servicio registrado por medio de la marca, modulo o nu de serie del
 ![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/a24701d1-c8e3-4c15-947b-33aed2a253f4)
 Archivo Excel
 ![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/0351b009-609f-4a5e-8d30-ac39403245b9)
+#Modulo flete
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/e06bad0b-5473-428f-8fa6-384e4edd41ac)
+Registro flete
+![image](https://github.com/keatnis/ControlSystemRP/assets/95552515/ca307c77-01b6-4ded-afcf-90154e9f555a)
+
 
 
 
