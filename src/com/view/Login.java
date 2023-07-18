@@ -30,16 +30,21 @@ public class Login extends javax.swing.JFrame {
     public static boolean btnLog = true;
 
     public Login() {
-        initComponents();
-        Image img4 = this.toImage(new ImageIcon(getClass().getResource("/com/utils/icon/icon.jpg")));
-        ImageIcon img3 = new ImageIcon(img4.getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_SMOOTH));
-        lbIcon.setIcon(img3);
-        btnLog = true;
+        if (!this.isActive()) {
+            initComponents();
+            Image img4 = this.toImage(new ImageIcon(getClass().getResource("/com/utils/icon/icon.jpg")));
+            ImageIcon img3 = new ImageIcon(img4.getScaledInstance(
+                    lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_SMOOTH));
+            lbIcon.setIcon(img3);
+            btnLog = true;
+        }
+
     }
 
     public Image toImage(Icon icon) {
         return ((ImageIcon) icon).getImage();
     }
+
     private void startThread(String user) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -65,6 +70,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     private void login() {
+
         UserDao userDao = new UserDao();
 
         String pass = new String(password.getPassword());
@@ -76,11 +82,13 @@ public class Login extends javax.swing.JFrame {
             if (usr.get(0).getPassword().equals(nuevopass)) {
                 startThread(usr.get(0).getNombre().toString());
 
+            } else {
+                JOptionPane.showMessageDialog(null, "La contraseña no coincide");
             }
 
             //  startThread();
         } else {
-            JOptionPane.showMessageDialog(null, "ingrese su usuario y contrseña");
+            JOptionPane.showMessageDialog(null, "Ingrese su usuario y contrseña");
         }
 
     }

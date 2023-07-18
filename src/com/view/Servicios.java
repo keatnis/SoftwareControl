@@ -8,6 +8,7 @@ import com.utils.ExportExcel;
 import com.utils.Filter;
 import com.utils.Validaciones;
 import com.utils.table.RenderTable;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,14 +21,14 @@ import javax.swing.table.DefaultTableModel;
  */
 /*
 TODO: UPDATE KM ENTITY VEHICULO Y ACTUALIZAR 
-*/
+ */
 public class Servicios extends javax.swing.JPanel {
 
     public static String FECHA_SERVICIO;
     private Vehiculo vehiculo;
     private VehiculosDAO vehiculosDAO;
     private Servicio servicio;
-    private final ServiciosDAO serviciosDAO;
+    private ServiciosDAO serviciosDAO;
 
     public Servicios() {
         initComponents();
@@ -47,16 +48,23 @@ public class Servicios extends javax.swing.JPanel {
 
         for (Vehiculo vehiculol : ve) {
 
-            cmbSearch.addItem(vehiculol.getId() + "- MARCA: " + vehiculol.getMarca() + " MODELO: "
+            cmbSearch.addItem(vehiculol.getId() + " - MARCA: " + vehiculol.getMarca() + " MODELO: "
                     + vehiculol.getModelo() + " NUM_SERIE: " + vehiculol.getDescripcion());
 
-            vehiculo = new Vehiculo();
-            vehiculo.setId(ve.get(0).getId());
-
         }
+
         cmbSearch.repaint();
         cmbSearch.setPopupVisible(true);
 
+//        vehiculo = new Vehiculo();
+//        vehiculo.setId(ve.get(0).getId());
+//        cmbSearch.addItemListener(new java.awt.event.ItemListener() {
+//            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+//
+//                vehiculo.setId(ve.get(cmbSearch.getSelectedIndex()).getId());
+//
+//            }
+//        });
     }
 
     public void showForms(boolean showForm, boolean showList) {
@@ -90,9 +98,10 @@ public class Servicios extends javax.swing.JPanel {
         txtFechaServicio.setDate(null);
         bgMetodoPago.clearSelection();
         txtFechaProximoServicio.setDate(null);
+        cmbSearch.removeAllItems();
 
     }
-    
+
     private void save() {
         servicio = new Servicio();
         validacionForm();
@@ -115,15 +124,18 @@ public class Servicios extends javax.swing.JPanel {
             servicio.setMetodoPago("EFECTIVO");
         };
         servicio.setProximoServicio(txtFechaProximoServicio.getDate());
-        
+
         servicio.setKm(Float.parseFloat(txtKM.getText()));
-       
+        vehiculo = new Vehiculo();
+        String[] idd = cmbSearch.getSelectedItem().toString().split(" ");
+        vehiculo.setId(Integer.parseInt(idd[0]));
+        idd = null;
         servicio.setVehiculo(vehiculo);
-        
+        System.out.println("id_vehiculo" + vehiculo.getId());
         //TODO: UPDATE KM IN ENTITY VEHICULO
         serviciosDAO.save(servicio);
-        if(vehiculo.getKmActual()<Float.parseFloat(txtKM.getText())){
-            serviciosDAO.updateKM(vehiculo.getId(), Float.parseFloat(txtKM.getText()));
+        if (vehiculo.getKmActual() < Float.parseFloat(txtKM.getText())) {
+            vehiculosDAO.updateKM(vehiculo.getId(), Float.parseFloat(txtKM.getText()));
         }
     }
 
@@ -144,7 +156,7 @@ public class Servicios extends javax.swing.JPanel {
         RenderTable render = new RenderTable();
         table.setDefaultRenderer(Object.class, render);
         /* obtengo la lista de */
-        
+
         List<Servicio> list = serviciosDAO.getAllServicesByDate();
 
         for (Servicio servicio : list) {
@@ -156,7 +168,7 @@ public class Servicios extends javax.swing.JPanel {
                 servicio.getVehiculo().getModelo(),
                 servicio.getVehiculo().getType(),
                 servicio.getVehiculo().getDescripcion(),
-                servicio.getVehiculo().getKmActual(),
+                servicio.getKm(),
                 servicio.getId(),
                 servicio.getDescripcion(),
                 servicio.getFecha(),
@@ -232,8 +244,8 @@ public class Servicios extends javax.swing.JPanel {
         servicio.setVehiculo(vehiculo);
 
         serviciosDAO.update(servicio);
-        if(vehiculo.getKmActual()<Float.parseFloat(txtKM.getText())){
-            serviciosDAO.updateKM(vehiculo.getId(), Float.parseFloat(txtKM.getText()));
+        if (vehiculo.getKmActual() < Float.parseFloat(txtKM.getText())) {
+            vehiculosDAO.updateKM(vehiculo.getId(), Float.parseFloat(txtKM.getText()));
         }
         showData(tblAllServices);
     }
@@ -274,6 +286,7 @@ public class Servicios extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         bgMetodoPago = new javax.swing.ButtonGroup();
         panelList = new javax.swing.JPanel();
@@ -321,7 +334,8 @@ public class Servicios extends javax.swing.JPanel {
         txtKM = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtFechaServicio = new com.toedter.calendar.JDateChooser();
-        jSpinner1 = new javax.swing.JSpinner();
+
+        setLayout(new java.awt.GridBagLayout());
 
         panelOptions.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
         panelOptions.setLayout(new java.awt.GridLayout(4, 0, 0, 5));
@@ -370,6 +384,7 @@ public class Servicios extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblAllServices.setPreferredSize(null);
         jScrollPane4.setViewportView(tblAllServices);
 
         jLabel13.setText("Ultimos servicios registrados");
@@ -411,8 +426,16 @@ public class Servicios extends javax.swing.JPanel {
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(panelList, gridBagConstraints);
 
         btnSearch.setText("Buscar");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -422,6 +445,11 @@ public class Servicios extends javax.swing.JPanel {
         });
 
         cmbSearch.setEditable(true);
+        cmbSearch.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbSearchItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Fecha del servicio");
 
@@ -687,11 +715,6 @@ public class Servicios extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1063, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(148, 148, 148)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(820, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -711,11 +734,6 @@ public class Servicios extends javax.swing.JPanel {
                     .addComponent(txtFechaServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(159, 159, 159)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(160, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout panelFormLayout = new javax.swing.GroupLayout(panelForm);
@@ -734,18 +752,11 @@ public class Servicios extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(panelList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(panelList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(panelForm, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -822,12 +833,16 @@ public class Servicios extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPrecioKeyReleased
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-         try {
+        try {
             ExportExcel.exportarExcel(tblAllServices);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnExportarActionPerformed
+
+    private void cmbSearchItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSearchItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSearchItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -862,7 +877,6 @@ public class Servicios extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JPanel panelForm;
     private javax.swing.JPanel panelList;
     private javax.swing.JPanel panelOptions;

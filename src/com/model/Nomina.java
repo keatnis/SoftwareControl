@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.model;
 
 import java.io.Serializable;
@@ -27,15 +23,14 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Nomina.findAll", query = "SELECT n FROM Nomina n"),
     @NamedQuery(name = "Nomina.findById", query = "SELECT n FROM Nomina n WHERE n.id = :id"),
-    @NamedQuery(name = "Nomina.findByFechaInicio", query = "SELECT n FROM Nomina n WHERE n.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "Nomina.findByFechaBaja", query = "SELECT n FROM Nomina n WHERE n.fechaBaja = :fechaBaja"),
-    @NamedQuery(name = "Nomina.findByPrestamos", query = "SELECT n FROM Nomina n WHERE n.prestamos = :prestamos"),
-    @NamedQuery(name = "Nomina.findByDiasLaborados", query = "SELECT n FROM Nomina n WHERE n.diasLaborados = :diasLaborados"),
-    @NamedQuery(name = "Nomina.findBySueldoDiario", query = "SELECT n FROM Nomina n WHERE n.sueldoDiario = :sueldoDiario"),
-    @NamedQuery(name = "Nomina.findByDescuentos", query = "SELECT n FROM Nomina n WHERE n.descuentos = :descuentos"),
-    @NamedQuery(name = "Nomina.findBySueldoNeto", query = "SELECT n FROM Nomina n WHERE n.sueldoNeto = :sueldoNeto"),
-    @NamedQuery(name = "Nomina.findByObservaciones", query = "SELECT n FROM Nomina n WHERE n.observaciones = :observaciones"),
-    @NamedQuery(name = "Nomina.findByPeriodo", query = "SELECT n FROM Nomina n WHERE n.periodo = :periodo")})
+     @NamedQuery(name = "Nomina.findByPrestamos", query = "SELECT n FROM Nomina n WHERE n.prestamos = :prestamos"),
+//    @NamedQuery(name = "Nomina.findByDiasLaborados", query = "SELECT n FROM Nomina n WHERE n.diasLaborados = :diasLaborados"),
+//    @NamedQuery(name = "Nomina.findBySueldoDiario", query = "SELECT n FROM Nomina n WHERE n.sueldoDiario = :sueldoDiario"),
+//    @NamedQuery(name = "Nomina.findByDescuentos", query = "SELECT n FROM Nomina n WHERE n.descuentos = :descuentos"),
+//    @NamedQuery(name = "Nomina.findBySueldoNeto", query = "SELECT n FROM Nomina n WHERE n.sueldoNeto = :sueldoNeto"),
+//    @NamedQuery(name = "Nomina.findByObservaciones", query = "SELECT n FROM Nomina n WHERE n.observaciones = :observaciones"),
+//    @NamedQuery(name = "Nomina.findByPeriodo", query = "SELECT n FROM Nomina n WHERE n.periodo = :periodo")
+})
 public class Nomina implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,23 +39,16 @@ public class Nomina implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaInicio;
-    @Basic(optional = false)
-    @Column(name = "fecha_baja")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaBaja;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "prestamos")
-    private Float prestamos;
+
     @Basic(optional = false)
     @Column(name = "dias_laborados")
     private int diasLaborados;
     @Basic(optional = false)
     @Column(name = "sueldo_diario")
     private float sueldoDiario;
+    @Column(name = "prestamos")
+    private Float prestamos;
     @Column(name = "descuentos")
     private Float descuentos;
     @Basic(optional = false)
@@ -71,22 +59,37 @@ public class Nomina implements Serializable {
     @Basic(optional = false)
     @Column(name = "periodo")
     private String periodo;
+    @Basic(optional = false)
+    @Column(name = "fecha_pago")
+    @Temporal(TemporalType.DATE)
+    private Date fechaPago;
 
     public Nomina() {
     }
 
-    public Nomina(Integer id) {
+    public Nomina(Integer id, int diasLaborados, float sueldoDiario, Float prestamos, Float descuentos, float sueldoNeto, String observaciones, String periodo, Date fechaPago) {
         this.id = id;
-    }
-
-    public Nomina(Integer id, Date fechaInicio, Date fechaBaja, int diasLaborados, float sueldoDiario, float sueldoNeto, String periodo) {
-        this.id = id;
-        this.fechaInicio = fechaInicio;
-        this.fechaBaja = fechaBaja;
         this.diasLaborados = diasLaborados;
         this.sueldoDiario = sueldoDiario;
+        this.prestamos = prestamos;
+        this.descuentos = descuentos;
         this.sueldoNeto = sueldoNeto;
+        this.observaciones = observaciones;
         this.periodo = periodo;
+        this.fechaPago = fechaPago;
+    }
+
+    public Date getFechaPago() {
+        if (fechaPago != null) {
+            return new Date(fechaPago.getTime());
+        } else {
+          return    fechaPago = null;
+        }
+       
+    }
+
+    public void setFechaPago(Date fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
     public Integer getId() {
@@ -95,22 +98,6 @@ public class Nomina implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public Date getFechaBaja() {
-        return fechaBaja;
-    }
-
-    public void setFechaBaja(Date fechaBaja) {
-        this.fechaBaja = fechaBaja;
     }
 
     public Float getPrestamos() {
@@ -193,5 +180,5 @@ public class Nomina implements Serializable {
     public String toString() {
         return "com.model.Nomina[ id=" + id + " ]";
     }
-    
+
 }

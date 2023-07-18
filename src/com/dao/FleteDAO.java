@@ -7,6 +7,8 @@ import com.model.AsignacionUnidad;
 import com.model.RecargaCombustible;
 import com.model.Flete;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
@@ -22,9 +24,9 @@ public class FleteDAO {
     private Flete flete;
     private RecargaCombustible recargaCombustible;
 
-    private final AsignacionUnidadJpaController asignacionUnidadJpaController;
-    private final FleteJpaController fleteJpaController;
-    private final RecargaCombustibleJpaController recargaCombustibleJpaController;
+    private  AsignacionUnidadJpaController asignacionUnidadJpaController;
+    private  FleteJpaController fleteJpaController;
+    private  RecargaCombustibleJpaController recargaCombustibleJpaController;
 
     public FleteDAO() {
         this.asignacionUnidadJpaController = new AsignacionUnidadJpaController(emf);
@@ -46,7 +48,7 @@ public class FleteDAO {
             recargaCombustibleJpaController.create(recargaCombustible);
             fleteJpaController.create(flete);
             // System.out.println("lugar trabaho s" + asignacionUnidad.getOperador().getId());
-            JOptionPane.showMessageDialog(null, "Registrado");
+            JOptionPane.showMessageDialog(null, "Datos del flete registrado correctamente");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -55,4 +57,14 @@ public class FleteDAO {
     public List<Flete> getDataFlete(){
        return fleteJpaController.findFleteEntities();
     }
+    public void updateStatus(Flete flete){
+        try {
+            fleteJpaController.edit(flete);
+            asignacionUnidadJpaController.edit(flete.getAsignacionUnidad());
+            JOptionPane.showMessageDialog(null, "Estatus Actualizado");
+        } catch (Exception ex) {
+           JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
 }

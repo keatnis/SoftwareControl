@@ -1,11 +1,10 @@
 package com.dao;
 
+import com.controller.JobJpaController;
 import com.controller.OperadorJpaController;
 import com.controller.exceptions.NonexistentEntityException;
 import com.model.Operador;
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,10 +14,12 @@ import javax.swing.JOptionPane;
 public class TrabajadoresDAO implements Trabajadores {
 
     private final OperadorJpaController operadorController;
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("ControlSystemPU");
+    private JobJpaController jobJpaController;
+//    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("ControlSystemPU");
 
     public TrabajadoresDAO() {
-        this.operadorController = new OperadorJpaController(emf);
+        this.operadorController = new OperadorJpaController();
+        this.jobJpaController = new JobJpaController();
     }
 
     @Override
@@ -37,6 +38,9 @@ public class TrabajadoresDAO implements Trabajadores {
     public void save(Operador operador) {
 
         operador.setContactoEmergencia(operador.getContactoEmergencia());
+
+     //   jobJpaController.create(operador.getJob());
+      //  operador.setJob(operador.getJob());
         operadorController.create(operador);
 
     }
@@ -67,7 +71,7 @@ public class TrabajadoresDAO implements Trabajadores {
 
     @Override
     public List<Operador> searchOperador(String key) {
-      return operadorController.getOperadorByNameLastName(key);
+        return operadorController.getOperadorByNameLastName(key);
     }
 
 }

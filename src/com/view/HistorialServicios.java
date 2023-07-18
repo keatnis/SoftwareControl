@@ -44,7 +44,7 @@ public class HistorialServicios extends javax.swing.JPanel {
                     + vehiculol.getModelo() + " NUM_SERIE: " + vehiculol.getDescripcion());
 
         }
-
+        
         cmbSearch.repaint();
         cmbSearch.setPopupVisible(true);
 

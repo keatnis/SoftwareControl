@@ -49,6 +49,12 @@ public class RecargaCombustible implements Serializable {
     @Basic(optional = false)
     @Column(name = "monto")
     private Float monto;
+    @Basic(optional = false)
+    @Column(name = "gasolinera")
+    private String gasolinera;
+    @Basic(optional = false)
+    @Column(name = "tipo_pago")
+    private String tipoPago;
     @ManyToOne()
     @JoinColumn(name = "detalle_combustible_id")
     private DetalleCombustible detalleCompustible;
@@ -63,34 +69,20 @@ public class RecargaCombustible implements Serializable {
         this.id = id;
     }
 
-    public RecargaCombustible(Integer id, float precioxlitro, float litros, float monto) {
-        this.id = id;
-        this.precioxlitro = precioxlitro;
-        this.litros = litros;
-        this.monto = monto;
-    }
-
-    public RecargaCombustible(Integer id, Float odometroActual, String tipoCombustible, float precioxlitro, float litros, float monto, DetalleCombustible detalleCompustible) {
+    public RecargaCombustible(Integer id, Float odometroActual, String tipoCombustible, float precioxlitro, float litros, Float monto, String gasolinera, String tipoPago, DetalleCombustible detalleCompustible, AsignacionUnidad asignacionUnidad) {
         this.id = id;
         this.odometroActual = odometroActual;
         this.tipoCombustible = tipoCombustible;
         this.precioxlitro = precioxlitro;
         this.litros = litros;
         this.monto = monto;
-        this.detalleCompustible = detalleCompustible;
-    }
-
-    public RecargaCombustible(Integer id, Float odometroActual, String tipoCombustible, float precioxlitro, float litros, float monto, DetalleCombustible detalleCompustible, AsignacionUnidad asignacionUnidad) {
-        this.id = id;
-        this.odometroActual = odometroActual;
-        this.tipoCombustible = tipoCombustible;
-        this.precioxlitro = precioxlitro;
-        this.litros = litros;
-        this.monto = monto;
+        this.gasolinera = gasolinera;
+        this.tipoPago = tipoPago;
         this.detalleCompustible = detalleCompustible;
         this.asignacionUnidad = asignacionUnidad;
     }
 
+   
     public AsignacionUnidad getAsignacionUnidad() {
         return asignacionUnidad;
     }

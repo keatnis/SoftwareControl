@@ -1,23 +1,19 @@
 package com.model;
 
-import com.mysql.cj.jdbc.Blob;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.MapsId;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -84,24 +80,24 @@ public class Operador implements Serializable {
     @Basic(optional = false)
     @Column(name = "typeblood")
     private String typeblood;
-    @Basic(optional = false)
-    @Column(name = "puesto")
-    private String puesto;
-
+    @Column(name = "status")
+    private boolean status;
     @Column(name = "file")
     private byte[] file;
-    
-    @OneToOne(cascade = CascadeType.PERSIST)
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "OPERADOR_EMERGENCIA",
-            joinColumns = @JoinColumn(name = "operador_id", referencedColumnName = "operador_id")
-    )
-    
+            joinColumns = @JoinColumn(name = "operador_id", referencedColumnName = "operador_id"))
     private ContactoEmergencia contactoEmergencia;
+     @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "JOB_OPERADOR",
+            joinColumns = @JoinColumn(name = "operador_id", referencedColumnName = "operador_id"))
+    private Job job;
 
     public Operador() {
     }
 
-    public Operador(Integer id, String nombre, String apePaterno, String apeMaterno, String calle, String num, String colonia, String ciudad, String estado, String telefono, String telefono2, String alergias, String typeblood, String puesto, byte[] file, ContactoEmergencia contactoEmergencia) {
+    public Operador(Integer id, String nombre, String apePaterno, String apeMaterno, String calle, String num, String colonia, String ciudad, String estado, String telefono, String telefono2, String alergias, String typeblood, boolean status, byte[] file, Job job, ContactoEmergencia contactoEmergencia) {
         this.id = id;
         this.nombre = nombre;
         this.apePaterno = apePaterno;
@@ -115,9 +111,26 @@ public class Operador implements Serializable {
         this.telefono2 = telefono2;
         this.alergias = alergias;
         this.typeblood = typeblood;
-        this.puesto = puesto;
+        this.status = status;
         this.file = file;
+        this.job = job;
         this.contactoEmergencia = contactoEmergencia;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getTelefono() {
@@ -158,14 +171,6 @@ public class Operador implements Serializable {
 
     public void setTypeblood(String typeblood) {
         this.typeblood = typeblood;
-    }
-
-    public String getPuesto() {
-        return puesto;
-    }
-
-    public void setPuesto(String puesto) {
-        this.puesto = puesto;
     }
 
     public ContactoEmergencia getContactoEmergencia() {

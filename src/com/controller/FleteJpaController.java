@@ -48,7 +48,7 @@ public class FleteJpaController implements Serializable {
             em.getTransaction().begin();
             flete = em.merge(flete);
             em.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Flete registrado correctamente");
+            JOptionPane.showMessageDialog(null, "Flete actualizado correctamente");
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {

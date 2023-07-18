@@ -163,20 +163,7 @@ public class ServicioJpaController implements Serializable {
 
     }
 
-    public void updateKMByIdVehiculo(Integer idVehiculo, Float km) {
-        String query = "UPDATE VEHICULO SET km_actual ='" + km + "' WHERE vehiculo_id =" + idVehiculo + "";
-        EntityManager em = getEntityManager();
-        // you will always get a single result
-        try {
-           
-                Integer res = em.createQuery(query)
-                   .getFirstResult();
-            System.out.println("res update " + res);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
+    
 
     public boolean servicioExits(Integer id) {
         String query = "select count(id) from SERVICIO  where id=" + id;

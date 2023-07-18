@@ -13,7 +13,7 @@ public class MainSystem extends javax.swing.JFrame {
 
         initComponents();
         MenuBar.setVisible(false);
-        this.showForm(new Dashboard(), "Dasboard");
+     //   this.showForm(new Dashboard(), "Dashboard");
     
 //        this.showForm(new Dasboard(), "Dasboard");
 
@@ -26,7 +26,7 @@ public class MainSystem extends javax.swing.JFrame {
         initComponents();
         setProgress(15, "Conectándose la base de datos");
         setProgress(23, "Cargando Módulos");
-        this.showForm(new Dashboard(), "Dasboard");
+        this.showForm(new Dashboard(), "Dashboard");
         setProgress(65, "Cargando interfaces");
         // this.setShape(new RoundRectangle2D.Double(0, 0, getWidth(),getHeight(), 20, 20));
      
@@ -82,11 +82,15 @@ public class MainSystem extends javax.swing.JFrame {
         menuAddVehiculo = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         registrarServicio = new javax.swing.JMenuItem();
-        programarServicio = new javax.swing.JMenuItem();
         historialServicio = new javax.swing.JMenuItem();
+        programarServicio = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         menuPersonal = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         incidencias = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -234,14 +238,6 @@ public class MainSystem extends javax.swing.JFrame {
         });
         jMenu3.add(registrarServicio);
 
-        programarServicio.setText("Programar servicio");
-        programarServicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                programarServicioActionPerformed(evt);
-            }
-        });
-        jMenu3.add(programarServicio);
-
         historialServicio.setText("Historial de Servicios");
         historialServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,9 +246,27 @@ public class MainSystem extends javax.swing.JFrame {
         });
         jMenu3.add(historialServicio);
 
+        programarServicio.setText("Programar servicio");
+        programarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                programarServicioActionPerformed(evt);
+            }
+        });
+        jMenu3.add(programarServicio);
+
         MenuBar.add(jMenu3);
 
         jMenu1.setText("Nomina");
+
+        jMenuItem4.setText("Registrar prestamos");
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem6.setText("Prestamos");
+        jMenu1.add(jMenuItem6);
+
+        jMenuItem7.setText("Calcular nómina");
+        jMenu1.add(jMenuItem7);
+
         MenuBar.add(jMenu1);
 
         menuPersonal.setText("Operadores");
@@ -262,13 +276,16 @@ public class MainSystem extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setText("Trabajadores");
+        jMenuItem1.setText("Lista y Registro");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         menuPersonal.add(jMenuItem1);
+
+        jMenuItem3.setText("Dar de baja");
+        menuPersonal.add(jMenuItem3);
 
         MenuBar.add(menuPersonal);
 
@@ -364,7 +381,7 @@ public class MainSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_DasboardActionPerformed
 
     private void menuAddVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddVehiculoActionPerformed
-        this.showForm(new ListaVehiculos(), "Menu: Vehiculos");
+        this.showForm(new Vehiculos(), "Menu: Vehiculos");
     }//GEN-LAST:event_menuAddVehiculoActionPerformed
 
     private void registrarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarServicioActionPerformed
@@ -395,7 +412,7 @@ public class MainSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_recargaActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-    this.showForm(new FleteView(), "Flete > Recgistro de flete");
+    this.showForm(new FleteView(), "Flete > Registro de flete");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 //    public static void main(ModelUsers user) {
@@ -430,7 +447,11 @@ public class MainSystem extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     public javax.swing.JLabel lbTitle;

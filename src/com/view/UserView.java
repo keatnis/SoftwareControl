@@ -133,6 +133,10 @@ public class UserView extends javax.swing.JPanel {
         user.setApeMaterno(txtAMaterno.getText());
         user.setNickname(txtUsuario.getText());
         user.setRole((String) cmbRole.getSelectedItem());
+            StringBuilder newPass = new StringBuilder(
+                Hash.sha1(password.getPassword().toString()));
+        user.setPassword(newPass.toString());
+        newPass = null;
         userDao.update(user);
         showData(tblUser);
         this.showForms(false, true);
@@ -362,7 +366,7 @@ public class UserView extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 44;
+        gridBagConstraints.ipadx = 20;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 6);

@@ -16,13 +16,16 @@
     <class>com.model.Nomina</class>
     <class>com.model.Workplace</class>
     <class>com.model.DetalleCombustible</class>
+    <class>com.model.NewEntity</class>
+    <class>com.model.HistorialTrabajador</class>
+    <class>com.model.Prestamo</class>
+    <class>com.model.Job</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/controlSystem?useSSL=false"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value=";5-X=j7eUwVz"/>
-      <property name="hibernate.hbm2ddl.auto" value="create"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
   </persistence-unit>
 </persistence>

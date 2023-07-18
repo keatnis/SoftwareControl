@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author keatnis
  */
-public class ListaVehiculos extends javax.swing.JPanel {
+public class Vehiculos extends javax.swing.JPanel {
 
     private VehiculosDAO vehiculosDao;
 
@@ -24,7 +24,7 @@ public class ListaVehiculos extends javax.swing.JPanel {
     private DetalleCombustible detalleCombustible;
     private DetalleCombustibleDAO detalleCombustibleDAO;
 
-    public ListaVehiculos() {
+    public Vehiculos() {
         initComponents();
         this.showForms(false, true);
         this.vehiculosDao = new VehiculosDAO();
@@ -204,6 +204,7 @@ public class ListaVehiculos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jTextField6 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
@@ -227,6 +228,7 @@ public class ListaVehiculos extends javax.swing.JPanel {
         txtModelo = new javax.swing.JTextField();
         txtNumSerie = new javax.swing.JTextField();
         txtKm = new javax.swing.JTextField();
+        AddCombustible = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cmbTipo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -242,7 +244,7 @@ public class ListaVehiculos extends javax.swing.JPanel {
 
         jTextField6.setText("jTextField6");
 
-        setLayout(new java.awt.CardLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setLayout(new java.awt.CardLayout());
 
@@ -288,6 +290,7 @@ public class ListaVehiculos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblVehiculos.setPreferredSize(null);
         tblVehiculos.setShowGrid(true);
         jScrollPane1.setViewportView(tblVehiculos);
 
@@ -307,22 +310,25 @@ public class ListaVehiculos extends javax.swing.JPanel {
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelListLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
-                        .addGap(8, 8, 8)
-                        .addComponent(panelOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelListLayout.setVerticalGroup(
             panelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelListLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
                 .addGroup(panelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelListLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(panelOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(panelListLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(panelOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanel1.add(panelList, "card2");
@@ -347,6 +353,13 @@ public class ListaVehiculos extends javax.swing.JPanel {
         txtKm.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtKmKeyTyped(evt);
+            }
+        });
+
+        AddCombustible.setText("+");
+        AddCombustible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddCombustibleActionPerformed(evt);
             }
         });
 
@@ -377,7 +390,9 @@ public class ListaVehiculos extends javax.swing.JPanel {
                             .addComponent(txtNumSerie)
                             .addComponent(txtKm)
                             .addComponent(cmbTipoCombustible, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(62, 62, 62))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AddCombustible)
+                .addGap(31, 31, 31))
         );
 
         formularioLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lbMarca, lbMarca1, lbMarca2, lbMarca3});
@@ -404,7 +419,9 @@ public class ListaVehiculos extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbMarca4)
-                    .addComponent(cmbTipoCombustible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbTipoCombustible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AddCombustible))))
         );
 
         jLabel1.setText("Tipo ");
@@ -479,7 +496,7 @@ public class ListaVehiculos extends javax.swing.JPanel {
                         .addComponent(btnCancelar)
                         .addGap(48, 48, 48)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         panelFormLayout.setVerticalGroup(
             panelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,12 +528,14 @@ public class ListaVehiculos extends javax.swing.JPanel {
                 .addGroup(panelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnSave))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         jPanel1.add(panelForm, "card3");
 
-        add(jPanel1, "card2");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.weightx = 0.8;
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
@@ -574,8 +593,26 @@ public class ListaVehiculos extends javax.swing.JPanel {
         this.showForms(false, true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void AddCombustibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCombustibleActionPerformed
+          DetallesCombustible dialog = new DetallesCombustible(new javax.swing.JFrame(), true);
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                dialog.setVisible(false);
+            }
+        });
+        dialog.setVisible(true);
+    //    cmbTipoCombustible.removeAllItems();
+        this.getTipoCombustible();
+    //    this.cmbTipoCombustible.repaint();
+        
+        this.repaint();
+        
+    }//GEN-LAST:event_AddCombustibleActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddCombustible;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnNew;

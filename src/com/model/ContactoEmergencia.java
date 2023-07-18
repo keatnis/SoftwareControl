@@ -28,7 +28,7 @@ import org.eclipse.persistence.annotations.PrimaryKey;
     @NamedQuery(name = "ContactoEmergencia.findById", query = "SELECT c FROM ContactoEmergencia c WHERE c.id = :id")
   })
 
-public class ContactoEmergencia{
+public class ContactoEmergencia implements Serializable{
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -40,8 +40,7 @@ public class ChooseFile {
                 pdf = new byte[(int) ruta.length()];
                 InputStream input = new FileInputStream(ruta);
                 input.read(pdf);
-                viewPdf(JOptionPane.showConfirmDialog(null,
-                        "Desea ver el archivo agregado ?"));
+                viewPdf();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Error al agregar archivo pdf " + ex.getMessage());
             }
@@ -50,13 +49,14 @@ public class ChooseFile {
         return pdf;
     }
 
-    private void viewPdf(int Option) {
-        int opcionpdf = JOptionPane.showConfirmDialog(null, "¿Quiere ver el archivo agregado?", "Archivo", JOptionPane.YES_NO_OPTION);
+    private void viewPdf() {
+        int opcionpdf = JOptionPane.showConfirmDialog(null, 
+                "¿Quiere ver el archivo agregado?", "Archivo seleccionado", JOptionPane.YES_NO_OPTION);
         if (opcionpdf == 0) {
             try {
                 Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,"
                         + "ShellExec_RunDLL " + rutaArchivo);
-            } catch (Exception evvv) {
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No se puede abrir el archivo de ayuda,"
                         + " probablemente fue borrado", "ERROR", JOptionPane.ERROR_MESSAGE);
             }

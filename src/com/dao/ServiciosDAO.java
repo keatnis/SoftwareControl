@@ -14,11 +14,12 @@ import javax.swing.JOptionPane;
  */
 public class ServiciosDAO {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("ControlSystemPU");
-    private final ServicioJpaController servicioJpaController;
+    private EntityManagerFactory emf ;
+    private ServicioJpaController servicioJpaController;
 
     public ServiciosDAO() {
-        this.servicioJpaController = new ServicioJpaController(emf);
+      this.emf = Persistence.createEntityManagerFactory("ControlSystemPU");
+      this.servicioJpaController= new ServicioJpaController(emf);
     }
 
     public void save(Servicio servicio) {
@@ -48,7 +49,7 @@ public class ServiciosDAO {
         }
 
     }
- 
+
     public void delete(Integer id) {
         if (servicioJpaController.servicioExits(id)) {
             try {
@@ -58,7 +59,7 @@ public class ServiciosDAO {
             }
         }
     }
-    public void updateKM(Integer idVehiculo,Float newKM){
-        servicioJpaController.updateKMByIdVehiculo(idVehiculo, newKM);
-    }
+//    public void updateKM(Integer idVehiculo,Float newKM){
+//        servicioJpaController.updateKMByIdVehiculo(idVehiculo, newKM);
+//    }
 }

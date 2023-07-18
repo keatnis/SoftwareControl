@@ -4,10 +4,12 @@ import com.controller.exceptions.NonexistentEntityException;
 import com.model.Vehiculo;
 import java.io.Serializable;
 import java.util.List;
+import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
@@ -132,7 +134,8 @@ public class VehiculoJpaController implements Serializable {
             em.close();
         }
     }
-       public boolean vehiculoExist(Integer id) {
+
+    public boolean vehiculoExist(Integer id) {
         String query = "select count(vehiculo_id) from VEHICULO  where vehiculo_id=" + id;
         final EntityManager em = getEntityManager();
         // you will always get a single result
@@ -140,14 +143,36 @@ public class VehiculoJpaController implements Serializable {
         return ((count.equals(0L)) ? false : true);
 
     }
-       public List<Vehiculo> getVehiculoByMMN(String key){
-           String sqlString = "SELECT * FROM VEHICULO as v WHERE v.marca like '%"+key+"%' "
-                   + "OR v.modelo LIKE '%"+key+"%' OR v.num_serie LIKE '%"+key+"%'";
-           EntityManager em = getEntityManager();
-           List<Vehiculo> list = em.createNativeQuery(sqlString,Vehiculo.class)
-                   .setParameter("marca", key).getResultList();
-                   return list;
-           
-       }
+
+    public List<Vehiculo> getVehiculoByMMN(String key) {
+        String sqlString = "SELECT * FROM VEHICULO as v WHERE v.marca like '%" + key + "%' "
+                + "OR v.modelo LIKE '%" + key + "%' OR v.num_serie LIKE '%" + key + "%'";
+        EntityManager em = getEntityManager();
+        List<Vehiculo> list = em.createNativeQuery(sqlString, Vehiculo.class)
+                .setParameter("marca", key).getResultList();
+        return list;
+
+    }
+
+    /*
+    Actualizar km al la db
+     */
+    public void updateKMByIdVehiculo(Integer idVehiculo, Float km) {
+        String query = "UPDATE VEHICULO SET km_actual ='" + km + "' WHERE vehiculo_id =" + idVehiculo + "";
     
+        EntityManager em = emf.createEntityManager();
+        try {
+            EntityTransaction entr = em.getTransaction();
+            entr.begin();
+            var query2 = em.createNativeQuery(query);
+          
+            int updateKM = query2.executeUpdate();
+            System.out.println(updateKM + " km updated");
+            entr.commit();
+        } finally {
+            em.close();
+        }
+
+    }
+
 }

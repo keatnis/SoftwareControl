@@ -22,8 +22,8 @@ public class OperadorJpaController implements Serializable {
     public OperadorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("ControlSystemPU");
-
+    private EntityManagerFactory emf;
+    
     public OperadorJpaController() {
         this.emf = Persistence.createEntityManagerFactory("ControlSystemPU");
     }
@@ -144,11 +144,10 @@ public class OperadorJpaController implements Serializable {
     }
 
     public List<Operador> getOperadorByNameLastName(String key) {
-        String sqlString = "SELECT * FROM OPERADOR as v WHERE v.nombre like '%" + key + "%' "
-                + "OR v.ape_materno LIKE '%" + key + "%' OR v.ape_paterno LIKE '%" + key + "%'";
+        String sqlString = "SELECT * FROM OPERADOR  WHERE nombre LIKE '%" + key + "%' ";
         EntityManager em = getEntityManager();
-        List<Operador> list = em.createNativeQuery(sqlString, Operador.class)
-                .setParameter("marca", key).getResultList();
+        List<Operador> list = em.createNativeQuery(sqlString,Operador.class)
+               .getResultList();
         return list;
 
     }

@@ -54,4 +54,7 @@ public class VehiculosDAO {
         }
         
     }
+        public void updateKM(Integer idVehiculo,Float newKM){
+        vehiculosJpaController.updateKMByIdVehiculo(idVehiculo, newKM);
+    }
 }
