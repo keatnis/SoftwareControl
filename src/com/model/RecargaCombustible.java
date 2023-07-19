@@ -58,10 +58,10 @@ public class RecargaCombustible implements Serializable {
     @ManyToOne()
     @JoinColumn(name = "detalle_combustible_id")
     private DetalleCombustible detalleCompustible;
-    @ManyToOne()
-    @JoinColumn(name = "asignacion_unidad_id")
-    private AsignacionUnidad asignacionUnidad;
-
+//    @ManyToOne()
+//    @JoinColumn(name = "asignacion_unidad_id")
+//    private AsignacionUnidad asignacionUnidad;
+    
     public RecargaCombustible() {
     }
 
@@ -69,7 +69,7 @@ public class RecargaCombustible implements Serializable {
         this.id = id;
     }
 
-    public RecargaCombustible(Integer id, Float odometroActual, String tipoCombustible, float precioxlitro, float litros, Float monto, String gasolinera, String tipoPago, DetalleCombustible detalleCompustible, AsignacionUnidad asignacionUnidad) {
+    public RecargaCombustible(Integer id, Float odometroActual, String tipoCombustible, float precioxlitro, float litros, Float monto, String gasolinera, String tipoPago, DetalleCombustible detalleCompustible) {
         this.id = id;
         this.odometroActual = odometroActual;
         this.tipoCombustible = tipoCombustible;
@@ -79,17 +79,30 @@ public class RecargaCombustible implements Serializable {
         this.gasolinera = gasolinera;
         this.tipoPago = tipoPago;
         this.detalleCompustible = detalleCompustible;
-        this.asignacionUnidad = asignacionUnidad;
     }
 
-   
-    public AsignacionUnidad getAsignacionUnidad() {
-        return asignacionUnidad;
-    }
-
-    public void setAsignacionUnidad(AsignacionUnidad asignacionUnidad) {
-        this.asignacionUnidad = asignacionUnidad;
-    }
+//    public RecargaCombustible(Integer id, Float odometroActual, String tipoCombustible, float precioxlitro, float litros, Float monto, String gasolinera, String tipoPago, DetalleCombustible detalleCompustible, AsignacionUnidad asignacionUnidad) {
+//        this.id = id;
+//        this.odometroActual = odometroActual;
+//        this.tipoCombustible = tipoCombustible;
+//        this.precioxlitro = precioxlitro;
+//        this.litros = litros;
+//        this.monto = monto;
+//        this.gasolinera = gasolinera;
+//        this.tipoPago = tipoPago;
+//        this.detalleCompustible = detalleCompustible;
+//        this.asignacionUnidad = asignacionUnidad;
+//        
+//    }
+//
+//   
+//    public AsignacionUnidad getAsignacionUnidad() {
+//        return asignacionUnidad;
+//    }
+//
+//    public void setAsignacionUnidad(AsignacionUnidad asignacionUnidad) {
+//        this.asignacionUnidad = asignacionUnidad;
+//    }
 
     public DetalleCombustible getDetalleCompustible() {
         return detalleCompustible;
@@ -98,7 +111,18 @@ public class RecargaCombustible implements Serializable {
     public void setDetalleCompustible(DetalleCombustible detalleCompustible) {
         this.detalleCompustible = detalleCompustible;
     }
-
+    public String getGasolinera(){
+        return gasolinera;
+    }
+    public void setGasolinera(String gasolinera){
+         this.gasolinera=gasolinera;
+    }
+     public String getMetodoPago(){
+        return tipoPago;
+    }
+    public void setMetodoPago(String metodoPago){
+         this.tipoPago=metodoPago;
+    }
     public Integer getId() {
         return id;
     }

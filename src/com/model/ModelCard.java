@@ -1,15 +1,28 @@
 package com.model;
 
+import javax.swing.Icon;
+
 /**
  *
  * @author keatnis
  */
 public class ModelCard {
-    String Values,Description;
 
-    public ModelCard(String Values, String Description) {
+    String Values, Description,ruta;
+    Icon icon;
+
+    public ModelCard(String Values, String Description, String ruta) {
         this.Values = Values;
         this.Description = Description;
+        this.ruta = ruta;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 
     public String getValues() {

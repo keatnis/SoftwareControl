@@ -13,18 +13,15 @@ import com.model.Operador;
 import com.model.Vehiculo;
 import com.model.Workplace;
 import java.util.Date;
-import javax.swing.JComboBox;
 import com.model.RecargaCombustible;
-import com.model.Servicio;
 import com.utils.ExportExcel;
 import com.utils.Filter;
 import com.utils.Validaciones;
 import com.utils.table.RenderStatus;
-import com.utils.table.RenderTable;
-import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -76,10 +73,12 @@ public class FleteView extends javax.swing.JPanel {
      */
     private void showData(JTable table) {
         Filter.removeAllRows(table);
+
         Object[] titles = new Object[]{
             "ID FLETE", "OPERADOR", "VEHICULO", "LUGAR TRABAJO", "CONCEPTO FLETE",
             "SALIDA", "RECIBE", "FECHA INICIO", "FECHA FIN", "STATUS", "KM INICIAL", "KM FINAL",
-            "ID ASIG.", "ID lUGAR TRABAJO", "ID OPERADOR", "ID VEHICULO"};
+            "ID ASIG.", "ID lUGAR TRABAJO", "ID OPERADOR", "ID VEHICULO", "ID RESPONSABLE", "RESPONSABLE CARGA",
+            "ODOMETRO ACTUAL", "PRECIOXLITRO", "LITROS", "TIPO COMB.", "MONTO", "GASOLINERA", "TIPO DE PAGO"};
         /*coloco el nombre de las  columnas de la tabla USER a el modelo */
         DefaultTableModel model = new DefaultTableModel(null, titles) {
 
@@ -114,7 +113,16 @@ public class FleteView extends javax.swing.JPanel {
                 flete.getAsignacionUnidad().getId(),
                 flete.getLugarTrabajo().getId(),
                 flete.getAsignacionUnidad().getOperador().getId(),
-                flete.getAsignacionUnidad().getVehiculo().getId()
+                flete.getAsignacionUnidad().getVehiculo().getId(),
+                flete.getResponsable(),
+                flete.getResponsable(),
+                flete.getRecargaCombustible().getOdometroActual(),
+                flete.getRecargaCombustible().getPrecioxlitro(),
+                flete.getRecargaCombustible().getLitros(),
+                flete.getRecargaCombustible().getTipoCombustible(),
+                flete.getRecargaCombustible().getMonto(),
+                flete.getRecargaCombustible().getGasolinera(),
+                flete.getRecargaCombustible().getMetodoPago()
 
             });
             /*establecemos el modelo  al Jtable llamado jTabla*/
@@ -128,7 +136,7 @@ public class FleteView extends javax.swing.JPanel {
         /* asignamos el ancho de cada columna de la tabla*/
 
         int[] anchos = {80, 200, 300, 300, 150, 200, 150, 80, 200, 150, 150, 150,
-            0, 0, 0, 0};
+            0, 0, 0, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100};
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
@@ -179,8 +187,18 @@ public class FleteView extends javax.swing.JPanel {
         recargaCombustible.setLitros(Float.parseFloat(txtLitrosCargados.getText()));
         recargaCombustible.setTipoCombustible(detalleCombustible.getTipo());
         recargaCombustible.setMonto(Float.parseFloat(txtMonto.getText()));
+        recargaCombustible.setGasolinera(cmbGasolinera.getSelectedItem().toString());
+        if (!rbEfectivo.isSelected() && !rbTransferencia.isSelected()) {
+            JOptionPane.showMessageDialog(null, "no ha seleccionado el tipo de pago");
+        } else if (rbEfectivo.isSelected()) {
+            recargaCombustible.setMetodoPago(rbEfectivo.getText());
+        } else if (rbTransferencia.isSelected()) {
+            recargaCombustible.setMetodoPago(rbTransferencia.getText());
+        } else {
+            return;
+        }
 
-        recargaCombustible.setAsignacionUnidad(asignacionUnidad);
+        // recargaCombustible.setAsignacionUnidad(asignacionUnidad);
         String[] workString = cmbLugarTrabajo.getSelectedItem().toString().split(" ");
         if (workString.length < 0) {
             JOptionPane.showMessageDialog(null, "Lugar de trabajo no seleccionado");
@@ -192,12 +210,46 @@ public class FleteView extends javax.swing.JPanel {
         flete.setConcepto(txtConcepto.getText());
         flete.setRecibe((String) cmbRecibe.getSelectedItem());
         flete.setStatus((String) cmbStatusFlete.getSelectedItem());
-      //  responsableCarga = new Operador();
-    //    String[] responsableID = cmbResponsableCarga.getSelectedItem().toString();
+        //  responsableCarga = new Operador();
+        //    String[] responsableID = cmbResponsableCarga.getSelectedItem().toString();
         //responsableCarga.setId(Integer.parseInt(responsableID[0]));
-      //  responsableID=null;
+        //  responsableID=null;
         flete.setResponsable(cmbResponsableCarga.getSelectedItem().toString());
         fleteDAO.saveFlete(flete, recargaCombustible, asignacionUnidad);
+    }
+
+    private void update() {
+
+    }
+
+    private void editAction() {
+        /*
+
+                    "ID FLETE", "OPERADOR", "VEHICULO", "LUGAR TRABAJO", "CONCEPTO FLETE",4
+            "SALIDA", "RECIBE", "FECHA INICIO", "FECHA FIN", "STATUS", "KM INICIAL", "KM FINAL",11
+            "ID ASIG.", "ID lUGAR TRABAJO", "ID OPERADOR", "ID VEHICULO", "ID RESPONSABLE", "RESPONSABLE CARGA",17
+            "ODOMETRO ACTUAL", "PRECIOXLITRO", "LITROS", "TIPO COMB.", "MONTO","GASOLINERA","TIPO DE PAGO"}; 24
+         */
+        int row = tblFlete.getSelectedRow();
+
+        txtConcepto.setText(String.valueOf(tblFlete.getValueAt(row, 4)));
+        txtHora.setText("0000");
+        txtKMFinal.setText(String.valueOf(tblFlete.getValueAt(row, 11)));
+        txtKMIncicial.setText(String.valueOf(tblFlete.getValueAt(row, 10)));
+        txtLitrosCargados.setText(String.valueOf(tblFlete.getValueAt(row, 20)));
+        txtMonto.setText(String.valueOf(tblFlete.getValueAt(row, 22)));
+        txtOdometroActual.setText(String.valueOf(tblFlete.getValueAt(row, 18)));
+        startDate.setDate(Validaciones.returnDate(String.valueOf(tblFlete.getValueAt(row, 7))));
+        endDate.setDate(Validaciones.returnDate(String.valueOf(tblFlete.getValueAt(row, 8))));
+        cmbGasolinera.setSelectedIndex(0);
+        cmbLugarTrabajo.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 13)));
+        cmbOperador.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 14)));
+        cmbRecibe.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 6)));
+        cmbResponsableCarga.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 16)));
+        cmbSalida.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 13)));
+        cmbStatusFlete.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 9)));
+        cmbTipoCompustible.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 21)));
+        cmbVehiculo.setSelectedItem(String.valueOf(tblFlete.getValueAt(row, 15)));
     }
 
     public static LocalDate convertToLocalDate(Date dateToConvert) {
@@ -272,11 +324,6 @@ public class FleteView extends javax.swing.JPanel {
 //            vehiculo.setTipoCombustible(ve.get(cmbVehiculo.getSelectedIndex()).getTipoCombustible());
 //            txtKMIncicial.setText(String.valueOf(ve.get(cmbVehiculo.getSelectedIndex()).getKmActual()));
 //        });
-
-    }
-
-    private void editAction() {
-
     }
 
     private void deleteAction() {
@@ -975,6 +1022,16 @@ public class FleteView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDetalleCombustibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleCombustibleActionPerformed
+//        DetallesCombustible dialog = new DetallesCombustible(new javax.swing.JFrame(), true);
+//        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//            @Override
+//            public void windowClosing(java.awt.event.WindowEvent e) {
+//                dialog.setVisible(false);
+//            }
+//        });
+//        dialog.setVisible(true);
+//        //  cmbTipoCompustible.removeAllItems();
+//        cmbTipoCompustible.repaint();
         DetallesCombustible dialog = new DetallesCombustible(new javax.swing.JFrame(), true);
         dialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -983,8 +1040,11 @@ public class FleteView extends javax.swing.JPanel {
             }
         });
         dialog.setVisible(true);
-        //  cmbTipoCompustible.removeAllItems();
-        cmbTipoCompustible.repaint();
+        //    cmbTipoCombustible.removeAllItems();
+        this.getTipoCombustible();
+        //    this.cmbTipoCombustible.repaint();
+
+        this.repaint();
     }//GEN-LAST:event_btnDetalleCombustibleActionPerformed
 
     private void cmbTipoCompustibleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTipoCompustibleItemStateChanged
@@ -1090,13 +1150,7 @@ public class FleteView extends javax.swing.JPanel {
 
     private void btnChangeStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatusActionPerformed
         StatusFlete dialog = new StatusFlete(new javax.swing.JFrame(), true);
-        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                dialog.setVisible(false);
-                showData(tblFlete);
-            }
-        });
+
         /*
                  Object[] titles = new Object[]{
             "ID FLETE", "OPERADOR", "VEHICULO", "LUGAR TRABAJO", "CONCEPTO FLETE",
@@ -1117,6 +1171,13 @@ public class FleteView extends javax.swing.JPanel {
             dialog.dataFlete(idFlete, idAsig, idWork, idOperador, idVehiculo, status, dateStart, dateEnd, kmInicial, kmFinal);
             dialog.setVisible(true);
         }
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                dialog.setVisible(false);
+                showData(tblFlete);
+            }
+        });
 
     }//GEN-LAST:event_btnChangeStatusActionPerformed
 
