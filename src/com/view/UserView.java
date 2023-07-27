@@ -43,10 +43,12 @@ public class UserView extends javax.swing.JPanel {
         user.setApeMaterno(txtAMaterno.getText());
         user.setNickname(txtUsuario.getText());
         /* encirtamos la contraseña con sha */
-        StringBuilder newPass = new StringBuilder(
-                Hash.sha1(password.getPassword().toString()));
-        user.setPassword(newPass.toString());
-        newPass = null;
+        String pass = password.getPassword().toString();
+        String newPass = Hash.sha1(pass);
+        System.out.println("pass en user view " + newPass);
+        String md5 =Hash.md5(pass);
+        System.out.println("encrp "+md5);
+        user.setPassword(pass);
         user.setRole((String) cmbRole.getSelectedItem());
         userDao.addUser(user);
 
@@ -114,7 +116,7 @@ public class UserView extends javax.swing.JPanel {
         txtAMaterno.setText(nombre[2]);
         nombre = null;
         /* para cambiar la contraseña del usuario debe ser administrador */
-        password.setEnabled(false);
+        password.setEnabled(true);
         txtUsuario.setText((String) tblUser.getValueAt(row, 2));
         cmbRole.setSelectedItem(tblUser.getValueAt(row, 3));
         this.showForms(true, false);
@@ -133,10 +135,12 @@ public class UserView extends javax.swing.JPanel {
         user.setApeMaterno(txtAMaterno.getText());
         user.setNickname(txtUsuario.getText());
         user.setRole((String) cmbRole.getSelectedItem());
-            StringBuilder newPass = new StringBuilder(
-                Hash.sha1(password.getPassword().toString()));
-        user.setPassword(newPass.toString());
-        newPass = null;
+        String pass = password.getPassword().toString();
+        String newPass = Hash.sha1(pass);
+        System.out.println("pass en user view " + newPass);
+        String md5 =Hash.md5(pass);
+        System.out.println("encrp "+md5);
+      user.setPassword(newPass);
         userDao.update(user);
         showData(tblUser);
         this.showForms(false, true);

@@ -14,12 +14,11 @@ import javax.swing.JOptionPane;
  */
 public class ServiciosDAO {
 
-    private EntityManagerFactory emf ;
     private ServicioJpaController servicioJpaController;
 
     public ServiciosDAO() {
-      this.emf = Persistence.createEntityManagerFactory("ControlSystemPU");
-      this.servicioJpaController= new ServicioJpaController(emf);
+   
+      this.servicioJpaController= new ServicioJpaController();
     }
 
     public void save(Servicio servicio) {

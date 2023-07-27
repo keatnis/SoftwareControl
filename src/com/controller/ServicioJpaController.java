@@ -3,12 +3,14 @@ package com.controller;
 import com.controller.exceptions.NonexistentEntityException;
 import com.model.Servicio;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
@@ -19,10 +21,10 @@ import javax.swing.JOptionPane;
  */
 public class ServicioJpaController implements Serializable {
 
-    public ServicioJpaController(EntityManagerFactory emf) {
+    public ServicioJpaController() {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManagerFactory emf =  Persistence.createEntityManagerFactory("ControlSystemPU");
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -162,8 +164,24 @@ public class ServicioJpaController implements Serializable {
         return list;
 
     }
+        
+        public List<Servicio> getServicesByMonth() {
+        EntityManager em = getEntityManager();
+        
+            int month=  LocalDate.now().getMonthValue();
+            
+        try {
 
-    
+            List<Servicio> list = em.createNamedQuery("Servicio.findByProximoServicio", Servicio.class)
+                    .setParameter("proximoServicio", month).getResultList();
+            return list;
+        } catch (Exception e) {
+
+            em.close();
+            return null;
+        }
+
+    }
 
     public boolean servicioExits(Integer id) {
         String query = "select count(id) from SERVICIO  where id=" + id;

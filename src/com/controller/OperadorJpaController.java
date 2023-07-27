@@ -1,17 +1,21 @@
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
+import com.dao.DashboardCountDTO;
 import com.model.Operador;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
+import org.eclipse.persistence.sessions.remote.corba.sun._CORBARemoteSessionControllerImplBase;
 
 /**
  *
@@ -23,7 +27,7 @@ public class OperadorJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf;
-    
+
     public OperadorJpaController() {
         this.emf = Persistence.createEntityManagerFactory("ControlSystemPU");
     }
@@ -146,8 +150,8 @@ public class OperadorJpaController implements Serializable {
     public List<Operador> getOperadorByNameLastName(String key) {
         String sqlString = "SELECT * FROM OPERADOR  WHERE nombre LIKE '%" + key + "%' ";
         EntityManager em = getEntityManager();
-        List<Operador> list = em.createNativeQuery(sqlString,Operador.class)
-               .getResultList();
+        List<Operador> list = em.createNativeQuery(sqlString, Operador.class)
+                .getResultList();
         return list;
 
     }
@@ -158,6 +162,18 @@ public class OperadorJpaController implements Serializable {
         // you will always get a single result
         Long count = (Long) em.createNativeQuery(query).getSingleResult();
         return ((count.equals(0L)) ? false : true);
+    }
+
+    public Object[] getCountDashboard() {
+        EntityManager em = getEntityManager();
+        String query = "SELECT count(id) AS combustible,\n"
+                + "(SELECT count(vehiculo_id) from VEHICULO ) as vehiculos,\n"
+                + "(select count(operador_id) from OPERADOR ) as trabajadores,\n"
+                + "(SELECT count(id) from FLETE) AS fletes\n"
+                + "FROM RECARGA_COMBUSTIBLE;";
+        // you will always get a single result
+
+        return (Object[]) em.createNativeQuery(query).getSingleResult();
     }
 
     public List<Operador> getAllOperador() {

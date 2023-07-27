@@ -113,7 +113,7 @@ public class Servicios extends javax.swing.JPanel {
         servicio.setDescripcion(txtDescripcion.getText());
         servicio.setObservaciones(txtObservacion.getText());
         if (!bgMetodoPago.getSelection().isSelected()) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado el método de pago ");
+            JOptionPane.showMessageDialog(null, "No ha seleccionado el método de pago ","Aviso",JOptionPane.ERROR_MESSAGE);
             return;
 
         } else if (rbTransferencia.isSelected()) {

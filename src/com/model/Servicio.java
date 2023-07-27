@@ -33,7 +33,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Servicio.findByImporte", query = "SELECT s FROM Servicio s WHERE s.importe = :importe"),
     @NamedQuery(name = "Servicio.findByMetodoPago", query = "SELECT s FROM Servicio s WHERE s.metodoPago = :metodoPago"),
     @NamedQuery(name = "Servicio.findByEmpresa", query = "SELECT s FROM Servicio s WHERE s.empresa = :empresa"),
-    @NamedQuery(name = "Servicio.findByProximoServicio", query = "SELECT s FROM Servicio s WHERE s.proximoServicio = :proximoServicio"),})
+    @NamedQuery(name = "Servicio.findByProximoServicio", query = "SELECT s FROM Servicio s WHERE  EXTRACT(MONTH FROM s.proximoServicio) = :proximoServicio  ORDER BY s.proximoServicio ASC"),})
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;

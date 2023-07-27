@@ -131,5 +131,19 @@ public class FleteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Flete> getFleteOrderByStatus() {
+        EntityManager em = getEntityManager();
+        try {
+
+            List<Flete> list = em.createNamedQuery("Flete.findByStatus", Flete.class)
+                    .setParameter("status", "Activo").getResultList();
+            return list;
+        } catch (Exception e) {
+
+            em.close();
+            return null;
+        }
+
+    }
 }

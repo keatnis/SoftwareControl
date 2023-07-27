@@ -30,7 +30,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Flete.findByResponsable", query = "SELECT f FROM Flete f WHERE f.responsable = :responsable"),
     @NamedQuery(name = "Flete.findByConcepto", query = "SELECT f FROM Flete f WHERE f.concepto = :concepto"),
     @NamedQuery(name = "Flete.findByRecibe", query = "SELECT f FROM Flete f WHERE f.recibe = :recibe"),
-    })
+    @NamedQuery(name = "Flete.findByStatus", query = "SELECT f FROM Flete f WHERE f.status = :status ORDER BY f.fecha ASC")
+})
 public class Flete implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,7 +67,7 @@ public class Flete implements Serializable {
     @ManyToOne()
     @JoinColumn(name = "recarga_combustible_id")
     private RecargaCombustible recargaCombustible;
-    
+
     public Flete() {
     }
 
@@ -91,7 +92,6 @@ public class Flete implements Serializable {
         this.recargaCombustible = recargaCombustible;
     }
 
-
     public String getStatus() {
         return status;
     }
@@ -107,7 +107,6 @@ public class Flete implements Serializable {
     public void setWorkplace(Workplace workplace) {
         this.workplace = workplace;
     }
-
 
     public Workplace getLugarTrabajo() {
         return workplace;

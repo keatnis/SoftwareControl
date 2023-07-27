@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
      * Login form create thread for the mainSystem use hash for encrypted the
      * password
      */
+      Hash hash;
     private Login splashFrame = this;
     public static boolean frameInicio = false;
     public static boolean btnLog = true;
@@ -75,17 +76,19 @@ public class Login extends javax.swing.JFrame {
 
         String pass = new String(password.getPassword());
         if (!nick.getText().equals("") && !pass.equals("")) {
-            String nuevopass = Hash.sha1(pass);
-
+             String nuevopass = Hash.getHash(pass,"sha1");
+             String passMD5 = Hash.md5(pass);
             List<User> usr = userDao.loginByUser(nick.getText());
-
+            System.out.println("user db "+usr.get(0).getPassword()  + "encriptado sha1 "+nuevopass +"md5 "+passMD5);
             if (usr.get(0).getPassword().equals(nuevopass)) {
+                
                 startThread(usr.get(0).getNombre().toString());
-
-            } else {
-                JOptionPane.showMessageDialog(null, "La contraseña no coincide");
+                
+            }else{
+                
+                return;
             }
-
+            return;
             //  startThread();
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese su usuario y contrseña");
@@ -239,7 +242,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         login();
-        btnLog = false;
+      //  btnLog = false;
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

@@ -6,6 +6,7 @@ import com.model.Flete;
 import com.model.Operador;
 import com.model.Vehiculo;
 import com.model.Workplace;
+import com.model.RecargaCombustible;
 import com.utils.Validaciones;
 import java.util.Date;
 
@@ -22,9 +23,10 @@ public class StatusFlete extends javax.swing.JDialog {
     private Flete flete;
     private FleteDAO fleteDAO;
     private Workplace workplace;
-    int id, idAsing, idWork, idOperador, idVehiculo = 0;
+    int id, idAsing, idWork, idOperador, idVehiculo,idRecargaCombustible = 0;
     private Vehiculo vehiculo;
     private Operador operador;
+    private RecargaCombustible recargaCombustible;
 
     public StatusFlete(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -32,7 +34,7 @@ public class StatusFlete extends javax.swing.JDialog {
         this.fleteDAO = new FleteDAO();
     }
 
-    public void dataFlete(int id, int idAsignacion, int idWork, int operador, int vehiculo, String status, String dateStart, String dateEnd, String KmInicial, String KMFinal) {
+    public void dataFlete(int id, int idAsignacion, int idWork, int operador, int vehiculo, int idRecarga,String status, String dateStart, String dateEnd, String KmInicial, String KMFinal) {
         cmbStatusFlete.setSelectedItem(status);
         startDate.setDate(Validaciones.returnDate(dateStart));
         endDate.setDate(Validaciones.returnDate(dateEnd));
@@ -43,6 +45,7 @@ public class StatusFlete extends javax.swing.JDialog {
         this.idWork = idWork;
         this.idOperador = operador;
         this.idVehiculo = vehiculo;
+        this.idRecargaCombustible = idRecarga;
     }
 
     private void updateStatus() {
@@ -70,6 +73,9 @@ public class StatusFlete extends javax.swing.JDialog {
         asignacionUnidad.setVehiculo(vehiculo);
         flete.setStatus((String) cmbStatusFlete.getSelectedItem());
         flete.setAsignacionUnidad(asignacionUnidad);
+        recargaCombustible  = new RecargaCombustible();
+        recargaCombustible.setId(idRecargaCombustible);
+        flete.setRecargaCombustible(recargaCombustible);
         fleteDAO.updateStatus(flete);
 
     }

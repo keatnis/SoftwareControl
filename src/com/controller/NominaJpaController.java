@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
@@ -133,5 +129,18 @@ public class NominaJpaController implements Serializable {
             em.close();
         }
     }
-    
+     public List<Nomina> getNominaById(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+
+            List<Nomina> list = em.createNamedQuery("Nomina.findById", Nomina.class)
+                    .setParameter("id", id).getResultList();
+            return list;
+        } catch (Exception e) {
+
+            em.close();
+            return null;
+        }
+
+    }
 }

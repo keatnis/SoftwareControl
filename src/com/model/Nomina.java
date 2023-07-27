@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 @Table(name = "NOMINA")
 @NamedQueries({
     @NamedQuery(name = "Nomina.findAll", query = "SELECT n FROM Nomina n"),
-    @NamedQuery(name = "Nomina.findById", query = "SELECT n FROM Nomina n WHERE n.id = :id"),
+    @NamedQuery(name = "Nomina.findById", query = "SELECT n FROM Nomina n WHERE n.id = :id ORDER BY n.fechaPago DESC"),
      @NamedQuery(name = "Nomina.findByPrestamos", query = "SELECT n FROM Nomina n WHERE n.prestamos = :prestamos"),
 //    @NamedQuery(name = "Nomina.findByDiasLaborados", query = "SELECT n FROM Nomina n WHERE n.diasLaborados = :diasLaborados"),
 //    @NamedQuery(name = "Nomina.findBySueldoDiario", query = "SELECT n FROM Nomina n WHERE n.sueldoDiario = :sueldoDiario"),

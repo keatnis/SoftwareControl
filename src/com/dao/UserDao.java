@@ -6,6 +6,7 @@ import com.model.User;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 import raven.toast.Notifications;
 
 /**
@@ -26,7 +27,7 @@ public class UserDao {
     metodos para el crud
      */
     public void addUser(User usr) {
-        
+
         userController.create(usr);
 
     }
@@ -44,20 +45,19 @@ public class UserDao {
         }
 
     }
-    public List<User> loginByUser(String user){
-      return userController.findByUsername(user);
-                
+
+    public List<User> loginByUser(String user) {
+        return userController.findByUsername(user);
+
     }
+
     public void delete(Integer id) {
         try {
             if (userController.userExists(id)) {
                 userController.destroy(id);
             }
         } catch (NonexistentEntityException ex) {
-            Notifications.getInstance().show(
-                    Notifications.Type.ERROR,
-                    Notifications.Location.TOP_CENTER,
-                    "El usuario con el ID: " + id + " no existe" + "Mensage: " + ex.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, "El usuario con el ID: " + id + " no existe" + "Mensage: " + ex.getLocalizedMessage());
         }
     }
 }

@@ -1,4 +1,5 @@
 package com.view;
+import com.utils.icon.CalcularNomina;
 import java.awt.BorderLayout;
 import java.awt.Component;
 
@@ -87,7 +88,7 @@ public class MainSystem extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        menuCalculoNomina = new javax.swing.JMenuItem();
         menuPersonal = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -174,7 +175,7 @@ public class MainSystem extends javax.swing.JFrame {
         MenuBar.setMaximumSize(new java.awt.Dimension(1054, 32769));
         MenuBar.setPreferredSize(new java.awt.Dimension(903, 28));
 
-        Dasboard.setText("*");
+        Dasboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/utils/icon/dashboard.png"))); // NOI18N
         Dasboard.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         Dasboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -261,11 +262,16 @@ public class MainSystem extends javax.swing.JFrame {
         jMenuItem4.setText("Registrar prestamos");
         jMenu1.add(jMenuItem4);
 
-        jMenuItem6.setText("Prestamos");
+        jMenuItem6.setText("Descuentos/ Horas Extras");
         jMenu1.add(jMenuItem6);
 
-        jMenuItem7.setText("Calcular nómina");
-        jMenu1.add(jMenuItem7);
+        menuCalculoNomina.setText("Calcular nómina");
+        menuCalculoNomina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCalculoNominaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuCalculoNomina);
 
         MenuBar.add(jMenu1);
 
@@ -340,7 +346,7 @@ public class MainSystem extends javax.swing.JFrame {
 
     private void DasboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DasboardMouseClicked
         // TODO add your handling code here:
-        this.showForm(new Dashboard(), "Dasboard");
+        this.showForm(new Dashboard(), "Dashboard");
        
     }//GEN-LAST:event_DasboardMouseClicked
 
@@ -377,7 +383,7 @@ public class MainSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void DasboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DasboardActionPerformed
-           this.showForm(new Dashboard(), "Dashboard");
+     
     }//GEN-LAST:event_DasboardActionPerformed
 
     private void menuAddVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddVehiculoActionPerformed
@@ -415,6 +421,10 @@ public class MainSystem extends javax.swing.JFrame {
     this.showForm(new FleteView(), "Flete > Registro de flete");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void menuCalculoNominaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCalculoNominaActionPerformed
+        this.showForm(new CalcularNomina(), "Nomina");
+    }//GEN-LAST:event_menuCalculoNominaActionPerformed
+
 //    public static void main(ModelUsers user) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
@@ -451,12 +461,12 @@ public class MainSystem extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     public javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUser;
     private javax.swing.JMenuItem menuAddVehiculo;
+    private javax.swing.JMenuItem menuCalculoNomina;
     private javax.swing.JMenu menuPersonal;
     private javax.swing.JMenuItem menuWorkplace;
     public javax.swing.JPanel panelBody;

@@ -21,7 +21,6 @@ import com.utils.table.RenderStatus;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -71,14 +70,14 @@ public class FleteView extends javax.swing.JPanel {
     /*
     Puede cambiar los colores del status en com.utils.table.RenderStatus
      */
-    private void showData(JTable table) {
+    public void showData(JTable table) {
         Filter.removeAllRows(table);
 
         Object[] titles = new Object[]{
             "ID FLETE", "OPERADOR", "VEHICULO", "LUGAR TRABAJO", "CONCEPTO FLETE",
             "SALIDA", "RECIBE", "FECHA INICIO", "FECHA FIN", "STATUS", "KM INICIAL", "KM FINAL",
             "ID ASIG.", "ID lUGAR TRABAJO", "ID OPERADOR", "ID VEHICULO", "ID RESPONSABLE", "RESPONSABLE CARGA",
-            "ODOMETRO ACTUAL", "PRECIOXLITRO", "LITROS", "TIPO COMB.", "MONTO", "GASOLINERA", "TIPO DE PAGO"};
+            "ODOMETRO ACTUAL", "PRECIOXLITRO", "LITROS", "TIPO COMB.", "MONTO", "GASOLINERA", "TIPO DE PAGO", "ID RECARGA"};
         /*coloco el nombre de las  columnas de la tabla USER a el modelo */
         DefaultTableModel model = new DefaultTableModel(null, titles) {
 
@@ -122,7 +121,8 @@ public class FleteView extends javax.swing.JPanel {
                 flete.getRecargaCombustible().getTipoCombustible(),
                 flete.getRecargaCombustible().getMonto(),
                 flete.getRecargaCombustible().getGasolinera(),
-                flete.getRecargaCombustible().getMetodoPago()
+                flete.getRecargaCombustible().getMetodoPago(),
+                flete.getRecargaCombustible().getId()
 
             });
             /*establecemos el modelo  al Jtable llamado jTabla*/
@@ -136,11 +136,11 @@ public class FleteView extends javax.swing.JPanel {
         /* asignamos el ancho de cada columna de la tabla*/
 
         int[] anchos = {80, 200, 300, 300, 150, 200, 150, 80, 200, 150, 150, 150,
-            0, 0, 0, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100};
+            0, 0, 0, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
-        this.hideColumns(table, new int[]{12, 13, 14, 15});
+        this.hideColumns(table, new int[]{12, 13, 14, 15, 25});
 
     }
 
@@ -1150,12 +1150,6 @@ public class FleteView extends javax.swing.JPanel {
 
     private void btnChangeStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatusActionPerformed
         StatusFlete dialog = new StatusFlete(new javax.swing.JFrame(), true);
-
-        /*
-                 Object[] titles = new Object[]{
-            "ID FLETE", "OPERADOR", "VEHICULO", "LUGAR TRABAJO", "CONCEPTO FLETE",
-            "SALIDA", "RECIBE", "FECHA INICIO", "FECHA FIN", "STATUS", "KM INICIAL", "KM FINAL",};
-         */
         if (tblFlete.getSelectedRow() >= 0) {
             int row = tblFlete.getSelectedRow();
             String status = String.valueOf(tblFlete.getValueAt(row, 9));
@@ -1168,16 +1162,22 @@ public class FleteView extends javax.swing.JPanel {
             int idWork = Integer.valueOf(tblFlete.getValueAt(row, 13).toString());
             int idOperador = Integer.valueOf(tblFlete.getValueAt(row, 14).toString());
             int idVehiculo = Integer.valueOf(tblFlete.getValueAt(row, 15).toString());
-            dialog.dataFlete(idFlete, idAsig, idWork, idOperador, idVehiculo, status, dateStart, dateEnd, kmInicial, kmFinal);
+            int idRecarga = Integer.valueOf(tblFlete.getValueAt(row, 25).toString());
+            dialog.dataFlete(idFlete, idAsig, idWork, idOperador, idVehiculo, idRecarga, status, dateStart, dateEnd, kmInicial, kmFinal);
             dialog.setVisible(true);
         }
         dialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
+                //showData(tblFlete);
                 dialog.setVisible(false);
-                showData(tblFlete);
+
             }
+
         });
+        if (!dialog.isVisible()) {
+            this.showData(tblFlete);
+        }
 
     }//GEN-LAST:event_btnChangeStatusActionPerformed
 
